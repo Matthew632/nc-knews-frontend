@@ -3,20 +3,24 @@ import fetchArticles from './api';
 
 class HomeView extends Component {
     state = {
-        articles: null,
+        topArticles: null,
     }
 
     render() {
-        return <h1>NC Knews</h1>
+        return <div>
+            <h1>NC Knews</h1>
+            <h2>Top Articles</h2>
+            <ol>
+                {this.state.topArticles && this.state.topArticles.map(art => <li>{art.title}</li>)}
+            </ol>
+        </div>
     }
     componentDidMount = () => {
-        fetchArticles('/articles').then(data => {
+        fetchArticles('/articles?sort_by=comment_count&order=desc&limit=3').then(data => {
             console.log(data)
-            this.setState({ articles: data });
+            this.setState({ topArticles: data });
         });
     }
-
-
 };
 
 
