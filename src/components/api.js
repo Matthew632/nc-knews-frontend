@@ -9,4 +9,12 @@ const fetchArticles = (path) => {
     });
 };
 
+export const fetchArticle = (id) => {
+    if (id === undefined) id = '';
+    return axios.get('https://nc-knews-server-main.herokuapp.com/api/articles/7').then(res => {
+        console.log(res.data)
+        return res;
+    });
+};
+
 export default fetchArticles;

@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
 import fetchArticles from './api';
+import { Link } from "@reach/router";
+import Container from 'react-bootstrap/Table';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+
 
 class HomeView extends Component {
     state = {
@@ -10,9 +15,10 @@ class HomeView extends Component {
         return <div>
             <h1>NC Knews</h1>
             <h2>Top Articles</h2>
-            <ol>
-                {this.state.topArticles && this.state.topArticles.map(art => <li>{art.title}</li>)}
-            </ol>
+            <Container>
+                <Row><Col>Title</Col><Col>Comments</Col></Row>
+                {this.state.topArticles && this.state.topArticles.map(art => <Row><Col><Link to='/article'>{art.title}</Link></Col><Col>{art.comment_count}</Col></Row>)}
+            </Container>
         </div>
     }
     componentDidMount = () => {
@@ -20,6 +26,10 @@ class HomeView extends Component {
             console.log(data)
             this.setState({ topArticles: data });
         });
+    }
+
+    handleClick = (event) => {
+        console.log(event.target.id);
     }
 };
 
