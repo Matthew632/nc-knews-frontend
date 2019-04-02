@@ -8,4 +8,11 @@ export const fetchData = (path) => {
     });
 };
 
+export const postVote = (id) => {
+    return axios.patch(`${BASE_URL}${id}`, { inc_votes: 1 }).then(res => {
+        console.log(res);
+        return res.data;
+    });
+};
+
 
