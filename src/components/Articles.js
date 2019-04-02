@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import fetchArticles from './api';
+import fetchData from './api';
 import { Link } from "@reach/router";
 import Container from 'react-bootstrap/Table';
 import Row from 'react-bootstrap/Row';
@@ -19,9 +19,9 @@ class Articles extends Component {
         </div>
     }
     componentDidMount = () => {
-        fetchArticles().then(data => {
+        fetchData('/articles').then(data => {
             console.log('in articles', data)
-            this.setState({ articles: data });
+            this.setState({ articles: data.articles });
         });
     }
 };

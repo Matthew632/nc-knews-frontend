@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import fetchArticles from './api';
+import fetchData from './api';
 import { Link } from "@reach/router";
 import Container from 'react-bootstrap/Table';
 import Row from 'react-bootstrap/Row';
@@ -17,14 +17,13 @@ class HomeView extends Component {
             <h2>Top Articles</h2>
             <Container>
                 <Row><Col>Title</Col><Col>Comments</Col></Row>
-                {this.state.topArticles && this.state.topArticles.map(art => <Row><Col><Link to='/article'>{art.title}</Link></Col><Col>{art.comment_count}</Col></Row>)}
+                {this.state.topArticles && this.state.topArticles.map(art => <Row><Col><Link to={`/article/${art.article_id}`} >{art.title}</Link></Col> <Col>{art.comment_count}</Col></Row>)}
             </Container>
         </div>
     }
     componentDidMount = () => {
-        fetchArticles('?sort_by=comment_count&order=desc&limit=3').then(data => {
-            console.log(data)
-            this.setState({ topArticles: data });
+        fetchData('/articles?sort_by=comment_count&order=desc&limit=3').then(data => {
+            this.setState({ topArticles: data.articles });
         });
     }
 
