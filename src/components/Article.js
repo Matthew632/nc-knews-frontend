@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import fetchArticle from './api';
+import Container from 'react-bootstrap/Table';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 class Article extends Component {
     state = {
@@ -13,7 +16,7 @@ class Article extends Component {
     }
     componentDidMount = () => {
         fetchArticle().then(data => {
-            console.log('hi im here', data)
+            console.log('in article component', data)
             this.setState({ article: data });
         });
     }

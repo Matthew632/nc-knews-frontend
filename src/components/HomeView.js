@@ -22,7 +22,7 @@ class HomeView extends Component {
         </div>
     }
     componentDidMount = () => {
-        fetchArticles('/articles?sort_by=comment_count&order=desc&limit=3').then(data => {
+        fetchArticles('?sort_by=comment_count&order=desc&limit=3').then(data => {
             console.log(data)
             this.setState({ topArticles: data });
         });
