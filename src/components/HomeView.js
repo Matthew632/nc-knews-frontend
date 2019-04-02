@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import fetchData from './api';
+import { fetchData } from './api';
 import { Link } from "@reach/router";
 import Container from 'react-bootstrap/Table';
 import Row from 'react-bootstrap/Row';
