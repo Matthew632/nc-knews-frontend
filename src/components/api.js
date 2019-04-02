@@ -8,8 +8,15 @@ export const fetchData = (path) => {
     });
 };
 
-export const postVote = (id) => {
+export const patchVote = (id) => {
     return axios.patch(`${BASE_URL}${id}`, { inc_votes: 1 }).then(res => {
+        console.log(res);
+        return res.data;
+    });
+};
+
+export const postComment = (id, comment) => {
+    return axios.post(`${BASE_URL}${id}`, comment).then(res => {
         console.log(res);
         return res.data;
     });

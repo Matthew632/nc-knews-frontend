@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { fetchData, postVote } from './api';
+import { fetchData, patchVote } from './api';
 import Form from './Form';
 import Container from 'react-bootstrap/Table';
 import Row from 'react-bootstrap/Row';
@@ -22,7 +22,7 @@ class Article extends Component {
                 <p><span>{this.state.article.votes}</span><Button variant="primary" id={`/articles/${this.props.id}`} onClick={this.handleClick}>Vote</Button></p>
             </div>
             }
-            <Form types='Comment' />
+            <Form types='Comment' articleId={this.props.id} />
             <div>{this.state.comments && <div>
                 <Container>
                     <Row><Col>Comments</Col></Row>
@@ -31,7 +31,7 @@ class Article extends Component {
             </div>}</div>
         </div>
     }
-
+    // split comments into own component
     // refactor the above convert date
     componentDidMount = () => {
         fetchData(`/articles/${this.props.id}`).then(data => {
@@ -41,10 +41,12 @@ class Article extends Component {
             this.setState(prevState => ({ ...prevState, comments: data.comments }));
         });
     }
+    // should use a promise.all for the above
 
     handleClick = (event) => {
-        postVote(event.target.id).then(this.componentDidMount)
+        patchVote(event.target.id).then(this.componentDidMount)
     }
+    // the above .componentDidMount is a hack and should be refactored
     // maybe add to local storage to prevent repeated votes & disable button
 };
 
