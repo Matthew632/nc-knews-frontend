@@ -16,8 +16,8 @@ export const patchVote = (id) => {
 };
 
 export const postComment = (id, comment) => {
-    return axios.post(`${BASE_URL}${id}`, comment).then(res => {
-        console.log(res);
+    return axios.post(`${BASE_URL}/articles/${id}/comments`, comment).then(res => {
+        console.log('post function');
         return res.data;
     });
 };
