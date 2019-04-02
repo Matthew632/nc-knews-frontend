@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { fetchData, postVote } from './api';
+import Form from './Form';
 import Container from 'react-bootstrap/Table';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -20,7 +21,9 @@ class Article extends Component {
                 <p>Some words...</p>
                 <p><span>{this.state.article.votes}</span><Button variant="primary" id={`/articles/${this.props.id}`} onClick={this.handleClick}>Vote</Button></p>
             </div>
-            }<div>{this.state.comments && <div>
+            }
+            <Form types='Comment' />
+            <div>{this.state.comments && <div>
                 <Container>
                     <Row><Col>Comments</Col></Row>
                     {this.state.comments.map(com => <div><Row><Col>User</Col><Col>{com.author}</Col></Row> <Row><Col>Comment</Col><Col>{com.body}</Col></Row><Row><Col>Votes</Col><Col><div><span>{com.votes}</span><Button variant="primary" id={`/comments/${com.comment_id}`} onClick={this.handleClick}>Approve</Button></div></Col></Row></div>)}
