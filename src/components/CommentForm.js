@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { postComment } from './api';
 
-class Form extends Component {
+class CommentForm extends Component {
     constructor(props) {
         super(props);
         this.state = { userInput: '' };
@@ -11,9 +11,8 @@ class Form extends Component {
     }
 
     render() {
-        const { types } = this.props;
-        return <form onSubmit={this.handleSubmit}><label for={`add${types}`}>{`Add ${types}:`}</label>
-            <textarea value={this.state.userInput} name={`add${types}`} id={`add${types}`} onChange={this.handleChange}></textarea>
+        return <form onSubmit={this.handleSubmit}><label for={'addComment'}>Add a comment:</label>
+            <textarea value={this.state.userInput} name='addComment' id={'addComment'} onChange={this.handleChange}></textarea>
             <input type="submit" value="Add"></input>
         </form>
     }
@@ -29,4 +28,4 @@ class Form extends Component {
     }
 }
 
-export default Form;
+export default CommentForm;

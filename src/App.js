@@ -11,12 +11,12 @@ class App extends Component {
     return (
       <div className="App">
         <nav>
-          <Link to="/">Home</Link> <Link to="/articles">All Articles</Link>
+          <Link to="/">Home</Link> <Link to="/articles/all">All Articles</Link>
         </nav>
         <Router>
           <HomeView path="/" />
           <Article path="/article/:id" />
-          <Articles path="/articles" />
+          <Articles path="/articles/:topic" />
         </Router>
       </div>
     );

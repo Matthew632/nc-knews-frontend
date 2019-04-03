@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { fetchData, patchVote } from './api';
 import Comments from './Comments';
-import Form from './Form';
+import CommentForm from './CommentForm';
 import Button from 'react-bootstrap/Button';
 
 class Article extends Component {
@@ -10,6 +10,7 @@ class Article extends Component {
     }
 
     render() {
+        console.log(this.props)
         return <div>
             {this.state.article && <div>
                 <h2>{this.state.article.title}</h2>
@@ -19,7 +20,7 @@ class Article extends Component {
                 <p><span>{this.state.article.votes}</span><Button variant="primary" id={`/articles/${this.props.id}`} onClick={this.handleClick}>Vote</Button></p>
             </div>
             }
-            <Form types='Comment' articleId={this.props.id} />
+            <CommentForm types='Comment' articleId={this.props.id} />
             <Comments articleId={this.props.id} />
         </div>
     }

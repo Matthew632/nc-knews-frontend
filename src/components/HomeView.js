@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { fetchData } from './api';
+import Topics from './Topics';
 import { Link } from "@reach/router";
 import Container from 'react-bootstrap/Table';
 import Row from 'react-bootstrap/Row';
@@ -15,6 +16,7 @@ class HomeView extends Component {
         return <div>
             <h1>NC Knews</h1>
             <h2>Top Articles</h2>
+            <Topics />
             <Container>
                 <Row><Col>Title</Col><Col>Comments</Col></Row>
                 {this.state.topArticles && this.state.topArticles.map(art => <Row><Col><Link to={`/article/${art.article_id}`} >{art.title}</Link></Col> <Col>{art.comment_count}</Col></Row>)}
