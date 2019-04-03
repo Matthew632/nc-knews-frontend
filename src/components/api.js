@@ -8,9 +8,16 @@ export const fetchData = path => {
   });
 };
 
-export const getArticles = path => {
-  if (path === undefined) path = "";
-  return axios.get(`${BASE_URL}/articles?${path}`).then(res => {
+export const getArticles = (sort_by, author) => {
+  let sorted = "";
+  let user = "";
+  if (sort_by) {
+    sorted = `&sort_by=${sort_by}`;
+  }
+  if (author) {
+    user = `&author=${author}`;
+  }
+  return axios.get(`${BASE_URL}/articles?${sorted}${user}`).then(res => {
     return res.data;
   });
 };

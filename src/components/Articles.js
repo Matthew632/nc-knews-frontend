@@ -13,9 +13,11 @@ class Articles extends Component {
   };
 
   render() {
-    let header = `${this.props.topic[0].toUpperCase()}${this.props.topic.slice(
-      1
-    )} Articles`;
+    let header = this.state.author
+      ? `${this.state.author}'s Articles`
+      : `${this.props.topic[0].toUpperCase()}${this.props.topic.slice(
+          1
+        )} Articles`;
     return (
       <div>
         <h2>{header}</h2>
@@ -50,6 +52,17 @@ class Articles extends Component {
       this.setState({ articles: data.articles });
     });
   };
+
+  componentDidUpdate(prevState) {
+    if (
+      prevState.sort_by !== this.state.sort_by ||
+      prevState.author !== this.state.author
+    ) {
+      getArticles(this.state.sort_by, this.state.author).then(data => {
+        this.setState({ articles: data.articles });
+      });
+    }
+  }
 
   handleFilterClick = event => {
     const pref = event.target.id;
