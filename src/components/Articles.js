@@ -20,7 +20,7 @@ class Articles extends Component {
       <div>
         <h2>{header}</h2>
         <SortBy handleClick={this.handleClick} />
-        <Filter handleClick={this.handleClick} />
+        <Filter handleFilterClick={this.handleFilterClick} />
         <Container>
           <Row>
             <Col>Title</Col>
@@ -51,10 +51,14 @@ class Articles extends Component {
     });
   };
 
+  handleFilterClick = event => {
+    const pref = event.target.id;
+    this.setState(prevState => ({ ...prevState, author: pref }));
+  };
+
   handleClick = event => {
     const pref = event.target.id;
-    console.log(event.target.id);
-    this.setState(prevState => ({ ...prevState, pref }));
+    this.setState(prevState => ({ ...prevState, sort_by: pref }));
   };
 }
 
