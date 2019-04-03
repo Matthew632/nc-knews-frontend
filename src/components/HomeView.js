@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import { fetchData } from './api';
 import Topics from './Topics';
 import { Link } from "@reach/router";
-import Container from 'react-bootstrap/Table';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import { Container, Row, Col } from 'react-bootstrap';
+
 
 
 class HomeView extends Component {
@@ -14,7 +13,7 @@ class HomeView extends Component {
 
     render() {
         return <div>
-            <h1>NC Knews</h1>
+            <h1>Northcoders News</h1>
             <h2>Top Articles</h2>
             <Topics />
             <Container>
