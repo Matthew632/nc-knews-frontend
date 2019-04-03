@@ -37,3 +37,10 @@ export const postComment = (id, comment) => {
       return res.data;
     });
 };
+
+export const postArticle = article => {
+  return axios.post(`${BASE_URL}/articles`, article).then(res => {
+    console.log("post function");
+    return res.data;
+  });
+};
