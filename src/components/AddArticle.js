@@ -12,7 +12,7 @@ class AddArticle extends Component {
       topic: null,
       newTopic: false,
       newTopicTitle: null,
-      NewTopicDescription: null
+      newTopicDescription: null
     };
 
     this.handleNewTopic = this.handleNewTopic.bind(this);
@@ -141,13 +141,29 @@ class AddArticle extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    postArticle({
-      username: "cooljmessy",
-      body: this.state.bodyInput,
-      topic: this.state.topic,
-      title: this.state.titleInput
-    }).then(this.setState({ bodyInput: "", titleInput: "" }));
+    Promise.all([
+      postArticle({
+        username: "cooljmessy",
+        body: this.state.bodyInput,
+        topic: this.state.topic,
+        title: this.state.titleInput
+      }),
+      postTopic({
+        slug: this.state.newTopicTitle,
+        description: this.state.newTopicDescription
+      })
+    ]).then(
+      this.setState({
+        bodyInput: "",
+        titleInput: "",
+        topic: null,
+        newTopic: false,
+        newTopicTitle: null,
+        newTopicDescription: null
+      })
+    );
   }
+  // could error handle the above for non-unique slugs
 }
 
 export default AddArticle;
