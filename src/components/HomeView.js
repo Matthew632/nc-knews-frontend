@@ -13,9 +13,9 @@ class HomeView extends Component {
   render() {
     return (
       <div>
-        <h1>Northcoders News</h1>
-        <h2>Top Articles</h2>
+        <h1>NC News</h1>
         <Topics />
+        <h2>Top Articles</h2>
         <Container>
           <Row>
             <Col>Title</Col>
