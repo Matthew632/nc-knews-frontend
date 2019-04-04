@@ -31,7 +31,7 @@ class HomeView extends Component {
               </Row>
             ))}
         </Container>
-        <AddArticle />
+        {this.props.user && <AddArticle />}
       </div>
     );
   }

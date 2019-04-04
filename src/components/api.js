@@ -66,3 +66,17 @@ export const postTopic = topic => {
     return res.data;
   });
 };
+
+export const deleteArticle = id => {
+  return axios.delete(`${BASE_URL}/articles/${id}`).then(res => {
+    console.log(res);
+    return res;
+  });
+};
+
+export const deleteComment = id => {
+  return axios.delete(`${BASE_URL}/comments/${id}`).then(res => {
+    console.log(res);
+    return res;
+  });
+};

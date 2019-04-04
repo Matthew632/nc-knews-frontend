@@ -160,7 +160,6 @@ class AddArticle extends Component {
       topic: this.state.topic,
       title: this.state.titleInput
     }).then(data => {
-      console.log(data.data);
       if (data.status === 201) {
         navigate(`/article/${data.data.article.article_id}`);
       }

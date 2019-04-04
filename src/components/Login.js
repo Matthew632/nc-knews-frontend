@@ -5,7 +5,7 @@ import { fetchData } from "./api";
 class Login extends Component {
   constructor(props) {
     super(props);
-    this.state = { userInput: "guest", authors: null };
+    this.state = { userInput: "", authors: null, notValid: false };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -24,14 +24,20 @@ class Login extends Component {
           </div>
         ) : (
           <form onSubmit={this.handleSubmit}>
-            <label for={"addUsername"}>Enter Username:</label>
+            <label for="addUsername">Enter Username:</label>
             <input
               type="text"
               value={this.state.userInput}
               name="addUsername"
-              id={"addUsername"}
+              id="addUsername"
               onChange={this.handleChange}
+              placeholder="'guest' is a valid username"
             />
+            {this.state.notValid && (
+              <label for="addUsername" style={{ color: "red" }}>
+                Please enter a valid username
+              </label>
+            )}
             <input type="submit" value="Login" />
           </form>
         )}
@@ -40,7 +46,6 @@ class Login extends Component {
   }
 
   componentDidUpdate(prevState) {
-    console.log("in update");
     if (!this.props.user && !this.state.authors) {
       fetchData("/users").then(data => {
         this.setState(prevState => ({
@@ -64,8 +69,10 @@ class Login extends Component {
     event.preventDefault();
     if (this.state.authors.some(user => user.username === username)) {
       this.props.setUser(username);
+      this.setState({ userInput: "" });
+    } else {
+      this.setState({ userInput: "", notValid: true });
     }
-    this.setState({ userInput: "guest" });
   }
 }
 

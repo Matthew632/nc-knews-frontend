@@ -25,7 +25,7 @@ class App extends Component {
         <Router>
           <HomeView user={this.state.user} path="/" />
           <Article user={this.state.user} path="/article/:id" />
-          <Articles user={this.state.user} path="/articles/:topic" />
+          <Articles path="/articles/:topic" />
         </Router>
       </div>
     );

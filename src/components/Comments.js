@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import { fetchData, patchVote } from "./api";
+import { fetchData, patchVote, deleteComment } from "./api";
 import { Container, Row, Col, Button } from "react-bootstrap";
 
 class Comments extends Component {
   state = {
-    comments: null
+    comments: null,
+    change: false
   };
   render() {
     return (
@@ -18,18 +19,16 @@ class Comments extends Component {
               {this.state.comments.map(com => (
                 <div>
                   <Row>
-                    <Col>User</Col>
                     <Col>{com.author}</Col>
                   </Row>
                   <Row>
-                    <Col>Comment</Col>
                     <Col>{com.body}</Col>
                   </Row>
                   <Row>
-                    <Col>Votes</Col>
                     <Col>
                       <div>
                         <span>
+                          Votes:{" "}
                           {com.votes +
                             (this.state[`key${com.comment_id}`] || 0)}
                         </span>
@@ -45,6 +44,19 @@ class Comments extends Component {
                       </div>
                     </Col>
                   </Row>
+                  {com.author === this.props.user && (
+                    <Row>
+                      <Col>
+                        <Button
+                          variant="danger"
+                          id={`${com.comment_id}`}
+                          onClick={this.handleDelete}
+                        >
+                          Remove Comment
+                        </Button>
+                      </Col>
+                    </Row>
+                  )}
                 </div>
               ))}
             </Container>
@@ -53,8 +65,6 @@ class Comments extends Component {
       </div>
     );
   }
-
-  // refactor the above convert date
 
   componentDidMount = () => {
     fetchData(`/articles/${this.props.articleId}/comments`).then(data => {
@@ -70,6 +80,27 @@ class Comments extends Component {
         [id]: 1
       }))
     );
+  };
+
+  componentDidUpdate(prevState) {
+    if (this.state.change) {
+      fetchData(`/articles/${this.props.articleId}/comments`).then(data => {
+        this.setState(prevState => ({
+          ...prevState,
+          comments: data.comments,
+          sortChange: false
+        }));
+      });
+    }
+  }
+
+  handleDelete = event => {
+    const id = event.target.id;
+    deleteComment(id).then(data => {
+      if (data.status === 204) {
+        this.setState(prevState => ({ ...prevState, change: true }));
+      }
+    });
   };
 }
 
