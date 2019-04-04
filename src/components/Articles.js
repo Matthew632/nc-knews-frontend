@@ -53,16 +53,17 @@ class Articles extends Component {
     });
   };
 
-  componentDidUpdate(prevState) {
-    if (
-      prevState.sort_by !== this.state.sort_by ||
-      prevState.author !== this.state.author
-    ) {
-      getArticles(this.state.sort_by, this.state.author).then(data => {
-        this.setState({ articles: data.articles });
-      });
-    }
-  }
+  // componentDidUpdate(prevState) {
+  //   console.log("in mount");
+  //   if (
+  //     prevState.sort_by !== this.state.sort_by ||
+  //     prevState.author !== this.state.author
+  //   ) {
+  //     getArticles(this.state.sort_by, this.state.author).then(data => {
+  //       this.setState({ articles: data.articles });
+  //     });
+  //   }
+  // }
 
   handleFilterClick = event => {
     const pref = event.target.id;

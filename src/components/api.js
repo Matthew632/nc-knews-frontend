@@ -40,6 +40,9 @@ export const postComment = (id, comment) => {
 
 export const postArticle = article => {
   return axios.post(`${BASE_URL}/articles`, article).then(res => {
+    if (res.status === 201) {
+      alert("Article created!");
+    }
     return res.data;
   });
 };
