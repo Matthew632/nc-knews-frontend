@@ -22,6 +22,21 @@ export const getArticles = (sort_by, author) => {
   });
 };
 
+export const fetchArticles = (topic, p, sort_by, author) => {
+  return axios
+    .get(`${BASE_URL}/articles`, {
+      params: {
+        topic,
+        p,
+        sort_by,
+        author
+      }
+    })
+    .then(res => {
+      return res.data;
+    });
+};
+
 export const patchVote = id => {
   return axios.patch(`${BASE_URL}${id}`, { inc_votes: 1 }).then(res => {
     console.log(res);

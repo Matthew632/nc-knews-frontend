@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import SortBy from "./SortBy";
 import Filter from "./Filter.js";
-import { fetchData, getArticles } from "./api";
+import { getArticles, fetchArticles } from "./api";
 import { Link } from "@reach/router";
 import { Container, Row, Col } from "react-bootstrap";
 
@@ -9,7 +9,10 @@ class Articles extends Component {
   state = {
     articles: null,
     sort_by: null,
-    author: null
+    author: null,
+    sortChange: false,
+    topic: null,
+    page: 1
   };
 
   render() {
@@ -22,7 +25,7 @@ class Articles extends Component {
       <div>
         <h2>{header}</h2>
         <SortBy handleClick={this.handleClick} />
-        <Filter handleFilterClick={this.handleFilterClick} />
+        <Filter handleClick={this.handleClick} />
         <Container>
           <Row>
             <Col>Title</Col>
@@ -33,7 +36,12 @@ class Articles extends Component {
             this.state.articles.map(art => (
               <Row>
                 <Col>
-                  <Link to={`/article/${art.article_id}`}>{art.title}</Link>
+                  <Link
+                    to={`/article/${art.article_id}`}
+                    key={`key${art.article_id}`}
+                  >
+                    {art.title}
+                  </Link>
                 </Col>
                 <Col>{art.comment_count}</Col>
                 <Col>{art.votes}</Col>
@@ -44,32 +52,38 @@ class Articles extends Component {
     );
   }
   componentDidMount = () => {
-    let path = "/articles?";
-    if (this.props.topic !== "all") {
-      path = `/articles?topic=${this.props.topic}`;
+    console.log("in the mount");
+    const propsTopic = this.props.topic;
+    let topic = "";
+    if (propsTopic !== "all") {
+      topic = `${this.props.topic}`;
     }
-    fetchData(path).then(data => {
-      this.setState({ articles: data.articles });
+    fetchArticles(topic, 1).then(data => {
+      this.setState({ articles: data.articles, topic: propsTopic });
     });
   };
 
   componentDidUpdate(prevState) {
-    console.log("in mount");
-    if (this.state.sort_by !== prevState.sort_by) {
+    console.log("in update");
+    if (this.state.sortChange) {
       getArticles(this.state.sort_by).then(data => {
-        this.setState(prevState => ({ ...prevState, articles: data.articles }));
+        this.setState(prevState => ({
+          ...prevState,
+          articles: data.articles,
+          sortChange: false
+        }));
       });
     }
   }
 
-  handleFilterClick = event => {
-    const pref = event.target.id;
-    this.setState(prevState => ({ ...prevState, author: pref }));
-  };
-
   handleClick = event => {
-    const pref = event.target.id;
-    this.setState(prevState => ({ ...prevState, sort_by: pref }));
+    const key = event.target.name;
+    const value = event.target.id;
+    this.setState(prevState => ({
+      ...prevState,
+      [key]: value,
+      sortChange: true
+    }));
   };
 }
 

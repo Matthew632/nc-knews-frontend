@@ -17,8 +17,10 @@ class Filter extends Component {
           {this.state.users &&
             this.state.users.map(use => (
               <Dropdown.Item
+                key={`key${use.username}`}
                 id={`${use.username}`}
-                onClick={this.props.handleFilterClick}
+                name="author"
+                onClick={this.props.handleClick}
               >
                 {use.username}
               </Dropdown.Item>

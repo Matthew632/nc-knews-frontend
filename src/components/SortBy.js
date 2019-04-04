@@ -8,13 +8,28 @@ const SortBy = props => {
         Sort by
       </Dropdown.Toggle>
       <Dropdown.Menu>
-        <Dropdown.Item id="created_at" onClick={props.handleClick}>
+        <Dropdown.Item
+          name="sort_by"
+          id="created_at"
+          onClick={props.handleClick}
+          key="key1"
+        >
           Date created
         </Dropdown.Item>
-        <Dropdown.Item id="comment_count" onClick={props.handleClick}>
+        <Dropdown.Item
+          name="sort_by"
+          id="comment_count"
+          onClick={props.handleClick}
+          key="key2"
+        >
           Comment count
         </Dropdown.Item>
-        <Dropdown.Item id="votes" onClick={props.handleClick}>
+        <Dropdown.Item
+          name="sort_by"
+          id="votes"
+          onClick={props.handleClick}
+          key="key3"
+        >
           Votes
         </Dropdown.Item>
       </Dropdown.Menu>
