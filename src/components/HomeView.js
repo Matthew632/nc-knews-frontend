@@ -4,6 +4,7 @@ import Topics from "./Topics";
 import AddArticle from "./AddArticle";
 import { Link } from "@reach/router";
 import { Container, Row, Col } from "react-bootstrap";
+import { navigate } from "@reach/router/lib/history";
 
 class HomeView extends Component {
   state = {
@@ -14,7 +15,7 @@ class HomeView extends Component {
     return (
       <div>
         <h1>NC News</h1>
-        <Topics />
+        <Topics handleTopic={this.handleTopic} />
         <h2>Top Articles</h2>
         <Container>
           <Row>
@@ -31,7 +32,7 @@ class HomeView extends Component {
               </Row>
             ))}
         </Container>
-        {this.props.user && <AddArticle />}
+        {this.props.user && <AddArticle user={this.props.user} />}
       </div>
     );
   }
@@ -41,6 +42,12 @@ class HomeView extends Component {
         this.setState({ topArticles: data.articles });
       }
     );
+  };
+
+  handleTopic = event => {
+    const slug = event.target.id;
+    console.log(slug);
+    navigate(`/articles/${slug}`);
   };
 
   handleClick = event => {

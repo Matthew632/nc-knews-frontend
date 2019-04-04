@@ -155,7 +155,7 @@ class AddArticle extends Component {
       );
     }
     postArticle({
-      username: "cooljmessy",
+      username: this.props.user,
       body: this.state.bodyInput,
       topic: this.state.topic,
       title: this.state.titleInput
