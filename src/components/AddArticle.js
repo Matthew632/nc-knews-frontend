@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { postArticle, fetchData, postTopic } from "./api";
 import { Dropdown, Container, Col, Row } from "react-bootstrap";
+import { navigate } from "@reach/router";
 
 class AddArticle extends Component {
   constructor(props) {
@@ -39,6 +40,7 @@ class AddArticle extends Component {
                 id="addTitle"
                 value={this.state.titleInput}
                 onChange={this.handleTitleChange}
+                required
               />
             </Col>
           </Row>
@@ -50,6 +52,7 @@ class AddArticle extends Component {
                 name="addArticle"
                 id="addArticle"
                 onChange={this.handleChange}
+                required
               />
             </Col>
           </Row>
@@ -89,6 +92,7 @@ class AddArticle extends Component {
                     type="text"
                     onChange={this.handleTopicChange}
                     value={this.state.newTopicTitle}
+                    required
                   />
                 </Col>
               </Row>
@@ -99,6 +103,7 @@ class AddArticle extends Component {
                     type="text"
                     onChange={this.handleDescriptionChange}
                     value={this.state.newTopicDescription}
+                    required
                   />
                 </Col>
               </Row>
@@ -141,27 +146,25 @@ class AddArticle extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    Promise.all([
-      postArticle({
-        username: "cooljmessy",
-        body: this.state.bodyInput,
-        topic: this.state.topic,
-        title: this.state.titleInput
-      }),
+    if (this.state.newTopic) {
       postTopic({
         slug: this.state.newTopicTitle,
         description: this.state.newTopicDescription
-      })
-    ]).then(
-      this.setState({
-        bodyInput: "",
-        titleInput: "",
-        topic: null,
-        newTopic: false,
-        newTopicTitle: null,
-        newTopicDescription: null
-      })
-    );
+      }).then(data =>
+        this.setState(prevState => ({ ...prevState, topic: prevState.topic }))
+      );
+    }
+    postArticle({
+      username: "cooljmessy",
+      body: this.state.bodyInput,
+      topic: this.state.topic,
+      title: this.state.titleInput
+    }).then(data => {
+      console.log(data.data);
+      if (data.status === 201) {
+        navigate(`/article/${data.data.article.article_id}`);
+      }
+    });
   }
   // could error handle the above for non-unique slugs
 }
