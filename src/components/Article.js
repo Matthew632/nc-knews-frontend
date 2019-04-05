@@ -4,6 +4,7 @@ import { navigate } from "@reach/router";
 import Comments from "./Comments";
 import CommentForm from "./CommentForm";
 import Button from "react-bootstrap/Button";
+import { dateConvert } from "../utils";
 
 class Article extends Component {
   state = {
@@ -23,13 +24,7 @@ class Article extends Component {
           <div>
             <h2>{this.state.article.title}</h2>
             <p>{`By ${this.state.article.author}`}</p>
-            <p>{`${this.state.article.created_at.slice(
-              8,
-              10
-            )}-${this.state.article.created_at.slice(
-              5,
-              8
-            )}${this.state.article.created_at.slice(0, 4)}`}</p>
+            <p>{dateConvert(this.state.article.created_at)}</p>
             <p>{this.state.article.body}</p>
             <p>
               <span>Votes: {this.state.article.votes + this.state.vote}</span>

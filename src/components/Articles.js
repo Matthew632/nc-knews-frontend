@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import SortBy from "./SortBy";
 import Filter from "./Filter.js";
-import { getArticles, fetchArticles } from "./api";
+import { fetchArticles } from "./api";
 import { Link } from "@reach/router";
 import { Container, Row, Col } from "react-bootstrap";
+import { dateConvert } from "../utils";
 
 class Articles extends Component {
   state = {
@@ -31,6 +32,7 @@ class Articles extends Component {
             <Col>Title</Col>
             <Col>Comments</Col>
             <Col>Votes</Col>
+            <Col>Created</Col>
           </Row>
           {this.state.articles &&
             this.state.articles.map(art => (
@@ -45,6 +47,7 @@ class Articles extends Component {
                 </Col>
                 <Col>{art.comment_count}</Col>
                 <Col>{art.votes}</Col>
+                <Col>{dateConvert(art.created_at)}</Col>
               </Row>
             ))}
         </Container>
@@ -52,21 +55,24 @@ class Articles extends Component {
     );
   }
   componentDidMount = () => {
-    console.log("in the mount");
     const propsTopic = this.props.topic;
-    let topic = "";
+    let topicVal = null;
     if (propsTopic !== "all") {
-      topic = `${this.props.topic}`;
+      topicVal = `${this.props.topic}`;
     }
-    fetchArticles(topic, 1).then(data => {
-      this.setState({ articles: data.articles, topic: propsTopic });
+    fetchArticles(topicVal, 1).then(data => {
+      this.setState({ articles: data.articles, topic: topicVal });
     });
   };
 
   componentDidUpdate(prevState) {
-    console.log("in update");
     if (this.state.sortChange) {
-      getArticles(this.state.sort_by).then(data => {
+      fetchArticles(
+        this.state.topic,
+        this.state.page,
+        this.state.sort_by,
+        this.state.author
+      ).then(data => {
         this.setState(prevState => ({
           ...prevState,
           articles: data.articles,
@@ -78,11 +84,16 @@ class Articles extends Component {
 
   handleClick = event => {
     const key = event.target.name;
+    let topVal = this.state.topic;
+    if (key === "author") {
+      topVal = null;
+    }
     const value = event.target.id;
     this.setState(prevState => ({
       ...prevState,
       [key]: value,
-      sortChange: true
+      sortChange: true,
+      topic: topVal
     }));
   };
 }
