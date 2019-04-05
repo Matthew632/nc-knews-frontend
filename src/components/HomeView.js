@@ -2,9 +2,8 @@ import React, { Component } from "react";
 import { fetchData } from "./api";
 import Topics from "./Topics";
 import AddArticle from "./AddArticle";
-import { Link } from "@reach/router";
+import { Link, navigate } from "@reach/router";
 import { Container, Row, Col } from "react-bootstrap";
-import { navigate } from "@reach/router/lib/history";
 
 class HomeView extends Component {
   state = {
@@ -43,6 +42,16 @@ class HomeView extends Component {
       }
     );
   };
+
+  componentDidUpdate(prevState) {
+    console.log("in update");
+    if (this.state.change) {
+      this.setState(prevState => ({
+        ...prevState,
+        change: false
+      }));
+    }
+  }
 
   handleTopic = event => {
     const slug = event.target.id;

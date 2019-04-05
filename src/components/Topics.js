@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import { fetchData } from "./api";
-import { navigate } from "@reach/router/lib/history";
 
 class Topics extends Component {
   state = {

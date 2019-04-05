@@ -19,6 +19,7 @@ class CommentForm extends Component {
           name="addComment"
           id={"addComment"}
           onChange={this.handleChange}
+          required
         />
         <input type="submit" value="Add" />
       </form>
