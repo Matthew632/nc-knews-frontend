@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import SortBy from "./SortBy";
 import Filter from "./Filter.js";
 import { fetchArticles } from "./api";
-import { Link } from "@reach/router";
+import { Link, navigate } from "@reach/router";
 import { Container, Row, Col } from "react-bootstrap";
 import { dateConvert } from "../utils";
 
@@ -60,9 +60,20 @@ class Articles extends Component {
     if (propsTopic !== "all") {
       topicVal = `${this.props.topic}`;
     }
-    fetchArticles(topicVal, 1).then(data => {
-      this.setState({ articles: data.articles, topic: topicVal });
-    });
+    fetchArticles(topicVal, 1)
+      .then(data => {
+        this.setState({ articles: data.articles, topic: topicVal });
+      })
+      .catch(error => {
+        navigate("/error", {
+          replace: true,
+          state: {
+            code: error.response.status,
+            message: error.response.data.msg,
+            from: "/articles"
+          }
+        });
+      });
   };
 
   componentDidUpdate(prevState) {
@@ -72,13 +83,24 @@ class Articles extends Component {
         this.state.page,
         this.state.sort_by,
         this.state.author
-      ).then(data => {
-        this.setState(prevState => ({
-          ...prevState,
-          articles: data.articles,
-          sortChange: false
-        }));
-      });
+      )
+        .then(data => {
+          this.setState(prevState => ({
+            ...prevState,
+            articles: data.articles,
+            sortChange: false
+          }));
+        })
+        .catch(error => {
+          navigate("/error", {
+            replace: true,
+            state: {
+              code: error.response.status,
+              message: error.response.data.msg,
+              from: "/articles"
+            }
+          });
+        });
     }
   }
 

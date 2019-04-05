@@ -5,6 +5,7 @@ import HomeView from "./components/HomeView";
 import Article from "./components/Article";
 import Articles from "./components/Articles";
 import Login from "./components/Login";
+import Error from "./components/Error";
 
 class App extends Component {
   state = {
@@ -26,6 +27,7 @@ class App extends Component {
           <HomeView user={this.state.user} path="/" />
           <Article user={this.state.user} path="/article/:id" />
           <Articles path="/articles/:topic" />
+          <Error path="/error" />
         </Router>
       </div>
     );

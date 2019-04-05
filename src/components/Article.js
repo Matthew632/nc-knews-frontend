@@ -58,29 +58,62 @@ class Article extends Component {
             setChange={this.setChange}
           />
         )}
-        <Comments user={this.props.user} articleId={this.props.id} />
+        {this.state.article && (
+          <Comments user={this.props.user} articleId={this.props.id} />
+        )}
       </div>
     );
   }
 
   componentDidMount = () => {
-    fetchData(`/articles/${this.props.id}`).then(data => {
-      this.setState({ article: data.article });
-    });
+    fetchData(`/articles/${this.props.id}`)
+      .then(data => {
+        this.setState({ article: data.article });
+      })
+      .catch(error => {
+        navigate("/error", {
+          replace: true,
+          state: {
+            code: error.response.status,
+            message: error.response.data.msg,
+            from: "/article"
+          }
+        });
+      });
   };
 
   handleClick = event => {
-    patchVote(event.target.id).then(
-      this.setState(prevState => ({ ...prevState, vote: 1 }))
-    );
+    patchVote(event.target.id)
+      .then(this.setState(prevState => ({ ...prevState, vote: 1 })))
+      .catch(error => {
+        navigate("/error", {
+          replace: true,
+          state: {
+            code: error.response.status,
+            message: error.response.data.msg,
+            from: "/article"
+          }
+        });
+      });
   };
 
   handleDelete = event => {
-    deleteArticle(this.state.article.article_id).then(data => {
-      if (data.status === 204) {
-        navigate("/");
-      }
-    });
+    deleteArticle(this.state.article.article_id)
+      .then(data => {
+        if (data.status === 204) {
+          navigate("/");
+        }
+      })
+      .catch(error => {
+        navigate("/error", {
+          replace: true,
+          state: {
+            code: error.response.status,
+            message: error.response.data.msg,
+            from: "/article"
+          }
+        });
+      });
   };
 }
 

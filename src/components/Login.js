@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Button from "react-bootstrap/Button";
 import { fetchData } from "./api";
+import { navigate } from "@reach/router";
 
 class Login extends Component {
   constructor(props) {
@@ -47,12 +48,23 @@ class Login extends Component {
 
   componentDidUpdate(prevState) {
     if (!this.props.user && !this.state.authors) {
-      fetchData("/users").then(data => {
-        this.setState(prevState => ({
-          ...prevState,
-          authors: data.users
-        }));
-      });
+      fetchData("/users")
+        .then(data => {
+          this.setState(prevState => ({
+            ...prevState,
+            authors: data.users
+          }));
+        })
+        .catch(error => {
+          navigate("/error", {
+            replace: true,
+            state: {
+              code: error.response.status,
+              message: error.response.data.msg,
+              from: "/article"
+            }
+          });
+        });
     }
   }
 

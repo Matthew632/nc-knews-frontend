@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import { fetchData } from "./api";
+import { navigate } from "@reach/router";
 
 class Topics extends Component {
   state = {
@@ -28,16 +29,21 @@ class Topics extends Component {
     );
   }
 
-  //   handleTopic = event => {
-  //     const slug = event.target.id;
-  //     console.log(slug);
-  //     navigate(`/articles/${slug}`);
-  //   };
-
   componentDidMount = () => {
-    fetchData("/topics").then(data => {
-      this.setState({ topics: data.topics });
-    });
+    fetchData("/topics")
+      .then(data => {
+        this.setState({ topics: data.topics });
+      })
+      .catch(error => {
+        navigate("/error", {
+          replace: true,
+          state: {
+            code: error.response.status,
+            message: error.response.data.msg,
+            from: "/"
+          }
+        });
+      });
   };
 }
 

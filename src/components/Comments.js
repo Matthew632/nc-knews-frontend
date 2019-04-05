@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { fetchData, patchVote, deleteComment } from "./api";
 import { Container, Row, Col, Button } from "react-bootstrap";
+import { navigate } from "@reach/router";
 
 class Comments extends Component {
   state = {
@@ -67,40 +68,84 @@ class Comments extends Component {
   }
 
   componentDidMount = () => {
-    fetchData(`/articles/${this.props.articleId}/comments`).then(data => {
-      this.setState({ comments: data.comments });
-    });
+    fetchData(`/articles/${this.props.articleId}/comments`)
+      .then(data => {
+        this.setState({ comments: data.comments });
+      })
+      .catch(error => {
+        navigate("/error", {
+          replace: true,
+          state: {
+            code: error.response.status,
+            message: error.response.data.msg,
+            from: "/article"
+          }
+        });
+      });
   };
 
   handleClick = event => {
     const id = `key${event.target.id.slice(10)}`;
-    patchVote(event.target.id).then(
-      this.setState(prevState => ({
-        ...prevState,
-        [id]: 1
-      }))
-    );
+    patchVote(event.target.id)
+      .then(
+        this.setState(prevState => ({
+          ...prevState,
+          [id]: 1
+        }))
+      )
+      .catch(error => {
+        navigate("/error", {
+          replace: true,
+          state: {
+            code: error.response.status,
+            message: error.response.data.msg,
+            from: "/article"
+          }
+        });
+      });
   };
 
   componentDidUpdate(prevState) {
     if (this.state.change) {
-      fetchData(`/articles/${this.props.articleId}/comments`).then(data => {
-        this.setState(prevState => ({
-          ...prevState,
-          comments: data.comments,
-          sortChange: false
-        }));
-      });
+      fetchData(`/articles/${this.props.articleId}/comments`)
+        .then(data => {
+          this.setState(prevState => ({
+            ...prevState,
+            comments: data.comments,
+            sortChange: false
+          }));
+        })
+        .catch(error => {
+          navigate("/error", {
+            replace: true,
+            state: {
+              code: error.response.status,
+              message: error.response.data.msg,
+              from: "/article"
+            }
+          });
+        });
     }
   }
 
   handleDelete = event => {
     const id = event.target.id;
-    deleteComment(id).then(data => {
-      if (data.status === 204) {
-        this.setState(prevState => ({ ...prevState, change: true }));
-      }
-    });
+    deleteComment(id)
+      .then(data => {
+        if (data.status === 204) {
+          this.setState(prevState => ({ ...prevState, change: true }));
+        }
+      })
+      .catch(error => {
+        navigate("/error", {
+          replace: true,
+          state: {
+            code: error.response.status,
+            message: error.response.data.msg,
+            from: "/article"
+          }
+        });
+      });
   };
 }
 

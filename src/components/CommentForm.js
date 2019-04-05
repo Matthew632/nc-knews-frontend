@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { postComment } from "./api";
+import { navigate } from "@reach/router";
 
 class CommentForm extends Component {
   constructor(props) {
@@ -35,7 +36,18 @@ class CommentForm extends Component {
     postComment(this.props.articleId, {
       username: this.props.user,
       body: this.state.userInput
-    }).then(this.props.setChange, this.setState({ userInput: "" }));
+    })
+      .then(this.props.setChange, this.setState({ userInput: "" }))
+      .catch(error => {
+        navigate("/error", {
+          replace: true,
+          state: {
+            code: error.response.status,
+            message: error.response.data.msg,
+            from: "/article"
+          }
+        });
+      });
   }
 }
 

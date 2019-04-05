@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import { fetchData } from "./api";
+import { navigate } from "@reach/router";
 
 class Filter extends Component {
   state = {
@@ -30,9 +31,20 @@ class Filter extends Component {
     );
   }
   componentDidMount = () => {
-    fetchData("/users").then(data => {
-      this.setState({ users: data.users });
-    });
+    fetchData("/users")
+      .then(data => {
+        this.setState({ users: data.users });
+      })
+      .catch(error => {
+        navigate("/error", {
+          replace: true,
+          state: {
+            code: error.response.status,
+            message: error.response.data.msg,
+            from: "/articles"
+          }
+        });
+      });
   };
 }
 export default Filter;

@@ -36,11 +36,20 @@ class HomeView extends Component {
     );
   }
   componentDidMount = () => {
-    fetchData("/articles?sort_by=comment_count&order=desc&limit=3").then(
-      data => {
+    fetchData("/articles?sort_by=comment_count&order=desc&limit=3")
+      .then(data => {
         this.setState({ topArticles: data.articles });
-      }
-    );
+      })
+      .catch(error => {
+        navigate("/error", {
+          replace: true,
+          state: {
+            code: error.response.status,
+            message: error.response.data.msg,
+            from: "/"
+          }
+        });
+      });
   };
 
   componentDidUpdate(prevState) {

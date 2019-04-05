@@ -114,9 +114,20 @@ class AddArticle extends Component {
     );
   }
   componentDidMount = () => {
-    fetchData("/topics").then(data => {
-      this.setState({ topics: data.topics });
-    });
+    fetchData("/topics")
+      .then(data => {
+        this.setState({ topics: data.topics });
+      })
+      .catch(error => {
+        navigate("/error", {
+          replace: true,
+          state: {
+            code: error.response.status,
+            message: error.response.data.msg,
+            from: "/"
+          }
+        });
+      });
   };
 
   handleChange(event) {
@@ -150,20 +161,42 @@ class AddArticle extends Component {
       postTopic({
         slug: this.state.newTopicTitle,
         description: this.state.newTopicDescription
-      }).then(data =>
-        this.setState(prevState => ({ ...prevState, topic: prevState.topic }))
-      );
+      })
+        .then(data =>
+          this.setState(prevState => ({ ...prevState, topic: prevState.topic }))
+        )
+        .catch(error => {
+          navigate("/error", {
+            replace: true,
+            state: {
+              code: error.response.status,
+              message: error.response.data.msg,
+              from: "/"
+            }
+          });
+        });
     }
     postArticle({
       username: this.props.user,
       body: this.state.bodyInput,
       topic: this.state.topic,
       title: this.state.titleInput
-    }).then(data => {
-      if (data.status === 201) {
-        navigate(`/article/${data.data.article.article_id}`);
-      }
-    });
+    })
+      .then(data => {
+        if (data.status === 201) {
+          navigate(`/article/${data.data.article.article_id}`);
+        }
+      })
+      .catch(error => {
+        navigate("/error", {
+          replace: true,
+          state: {
+            code: error.response.status,
+            message: error.response.data.msg,
+            from: "/"
+          }
+        });
+      });
   }
   // could error handle the above for non-unique slugs
 }
