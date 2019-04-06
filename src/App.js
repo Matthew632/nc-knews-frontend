@@ -33,6 +33,7 @@ class App extends Component {
           <Articles path="/articles/topic/:topic" />
           <Articles path="/articles/author/:author" />
           <Error path="/error" />
+          <Error path="*" />
         </Router>
       </div>
     );
