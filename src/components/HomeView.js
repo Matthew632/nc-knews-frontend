@@ -14,7 +14,7 @@ class HomeView extends Component {
     return (
       <div>
         <h1>NC News</h1>
-        <Topics handleTopic={this.handleTopic} />
+        <Topics />
         <h2>Top Articles</h2>
         <Container>
           <Row>
@@ -65,7 +65,7 @@ class HomeView extends Component {
   handleTopic = event => {
     const slug = event.target.id;
     console.log(slug);
-    navigate(`/articles/${slug}`);
+    navigate(`/articles/topic/${slug}`);
   };
 
   handleClick = event => {

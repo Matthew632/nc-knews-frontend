@@ -1,17 +1,10 @@
 import React, { Component } from "react";
-import Button from "react-bootstrap/Button";
+import { Button, Form } from "react-bootstrap";
 import { fetchData } from "../api";
 import { navigate } from "@reach/router";
 
 class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { userInput: "", authors: null, notValid: false };
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleLogout = this.handleLogout.bind(this);
-  }
+  state = { userInput: "", authors: null, notValid: false };
 
   render() {
     return (
@@ -24,9 +17,9 @@ class Login extends Component {
             </Button>
           </div>
         ) : (
-          <form onSubmit={this.handleSubmit}>
+          <Form onSubmit={this.handleSubmit}>
             <label for="addUsername">Enter Username:</label>
-            <input
+            <Form.Control
               type="text"
               value={this.state.userInput}
               name="addUsername"
@@ -39,8 +32,10 @@ class Login extends Component {
                 Please enter a valid username
               </label>
             )}
-            <input type="submit" value="Login" />
-          </form>
+            <Button type="submit" value="Login">
+              Login
+            </Button>
+          </Form>
         )}
       </div>
     );
@@ -68,15 +63,15 @@ class Login extends Component {
     }
   }
 
-  handleChange(event) {
+  handleChange = event => {
     this.setState({ userInput: event.target.value });
-  }
+  };
 
-  handleLogout() {
+  handleLogout = () => {
     this.props.setUser(null);
-  }
+  };
 
-  handleSubmit(event) {
+  handleSubmit = event => {
     const username = this.state.userInput.toLowerCase();
     event.preventDefault();
     if (
@@ -87,7 +82,7 @@ class Login extends Component {
     } else {
       this.setState({ userInput: "", notValid: true });
     }
-  }
+  };
 }
 
 export default Login;

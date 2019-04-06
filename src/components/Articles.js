@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import SortBy from "./SortBy";
 import Filter from "./Filter.js";
+import Topics from "./Topics";
 import { fetchArticles } from "../api";
 import { Link, navigate } from "@reach/router";
 import { Container, Row, Col } from "react-bootstrap";
@@ -12,21 +13,37 @@ class Articles extends Component {
     sort_by: null,
     author: null,
     sortChange: false,
+    authorChange: false,
+    topicChange: false,
     topic: null,
     page: 1
   };
 
   render() {
+    console.log("rendering");
     let header = this.state.author
       ? `${this.state.author}'s Articles`
-      : `${this.props.topic[0].toUpperCase()}${this.props.topic.slice(
+      : this.props.topic
+      ? `${this.props.topic[0].toUpperCase()}${this.props.topic.slice(
           1
-        )} Articles`;
+        )} Articles`
+      : "All Articles";
     return (
       <div>
         <h2>{header}</h2>
-        <SortBy handleClick={this.handleClick} />
-        <Filter handleClick={this.handleClick} />
+        <Container>
+          <Row>
+            <Col>
+              <SortBy handleClick={this.handleClick} />
+            </Col>
+            <Col>
+              <Filter />
+            </Col>
+            <Col>
+              <Topics />
+            </Col>
+          </Row>
+        </Container>
         <Container>
           <Row>
             <Col>Title</Col>
@@ -55,14 +72,13 @@ class Articles extends Component {
     );
   }
   componentDidMount = () => {
-    const propsTopic = this.props.topic;
-    let topicVal = null;
-    if (propsTopic !== "all") {
-      topicVal = `${this.props.topic}`;
-    }
-    fetchArticles(topicVal, 1)
+    let topicVal = this.props.topic ? this.props.topic : null;
+    fetchArticles(topicVal)
       .then(data => {
-        this.setState({ articles: data.articles, topic: topicVal });
+        this.setState({
+          articles: data.articles,
+          topic: topicVal
+        });
       })
       .catch(error => {
         navigate("/error", {
@@ -76,8 +92,28 @@ class Articles extends Component {
       });
   };
 
-  componentDidUpdate(prevState) {
-    if (this.state.sortChange) {
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.author !== this.props.author) {
+      this.setState(prevState => ({
+        ...prevState,
+        authorChange: true,
+        author: this.props.author,
+        topic: null
+      }));
+    }
+    if (prevProps.topic !== this.props.topic) {
+      this.setState(prevState => ({
+        ...prevState,
+        topicChange: true,
+        topic: this.props.topic,
+        author: null
+      }));
+    }
+    if (
+      this.state.sortChange ||
+      this.state.authorChange ||
+      this.state.topicChange
+    ) {
       fetchArticles(
         this.state.topic,
         this.state.page,
@@ -88,7 +124,9 @@ class Articles extends Component {
           this.setState(prevState => ({
             ...prevState,
             articles: data.articles,
-            sortChange: false
+            sortChange: false,
+            authorChange: false,
+            topicChange: false
           }));
         })
         .catch(error => {
@@ -106,16 +144,11 @@ class Articles extends Component {
 
   handleClick = event => {
     const key = event.target.name;
-    let topVal = this.state.topic;
-    if (key === "author") {
-      topVal = null;
-    }
     const value = event.target.id;
     this.setState(prevState => ({
       ...prevState,
       [key]: value,
-      sortChange: true,
-      topic: topVal
+      sortChange: true
     }));
   };
 }

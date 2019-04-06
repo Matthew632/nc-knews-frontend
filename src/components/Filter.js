@@ -12,7 +12,7 @@ class Filter extends Component {
     return (
       <Dropdown>
         <Dropdown.Toggle variant="info" id="dropdown-basic">
-          By author
+          Author
         </Dropdown.Toggle>
         <Dropdown.Menu>
           {this.state.users &&
@@ -21,7 +21,7 @@ class Filter extends Component {
                 key={`key${use.username}`}
                 id={`${use.username}`}
                 name="author"
-                onClick={this.props.handleClick}
+                onClick={this.handleClick}
               >
                 {use.username}
               </Dropdown.Item>
@@ -45,6 +45,10 @@ class Filter extends Component {
           }
         });
       });
+  };
+  handleClick = event => {
+    const user = event.target.id;
+    navigate(`/articles/author/${user}`);
   };
 }
 export default Filter;

@@ -1,58 +1,52 @@
 import React, { Component } from "react";
 import { postArticle, fetchData, postTopic } from "../api";
-import { Dropdown, Container, Col, Row } from "react-bootstrap";
+import { Dropdown, Container, Col, Row, Form, Button } from "react-bootstrap";
 import { navigate } from "@reach/router";
 
 class AddArticle extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      bodyInput: "",
-      titleInput: "",
-      topics: null,
-      topic: null,
-      newTopic: false,
-      newTopicTitle: null,
-      newTopicDescription: null
-    };
-
-    this.handleNewTopic = this.handleNewTopic.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleTitleChange = this.handleTitleChange.bind(this);
-    this.handleTopicChange = this.handleTopicChange.bind(this);
-    this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
-  }
+  state = {
+    bodyInput: "",
+    titleInput: "",
+    topics: null,
+    topic: null,
+    newTopic: false,
+    newTopicTitle: null,
+    newTopicDescription: null
+  };
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <Form onSubmit={this.handleSubmit}>
         <Container>
           <Row>
-            <Col>Add Article</Col>
+            <Col>
+              <h3>Add Article</h3>
+            </Col>
           </Row>
           <Row>
-            <Col>Title</Col>
             <Col>
-              <input
+              <Form.Control
                 type="text"
                 name="addTitle"
                 id="addTitle"
                 value={this.state.titleInput}
                 onChange={this.handleTitleChange}
                 required
+                placeholder="Title..."
               />
             </Col>
           </Row>
           <Row>
-            <Col>Article text</Col>
             <Col>
-              <textarea
+              <Form.Control
+                as="textarea"
+                rows="3"
                 value={this.state.bodyInput}
                 name="addArticle"
                 id="addArticle"
                 onChange={this.handleChange}
                 required
+                placeholder="Article..."
               />
             </Col>
           </Row>
@@ -80,29 +74,31 @@ class AddArticle extends Component {
               </Dropdown>
             </Col>
             <Col>
-              <input type="submit" value="Submit" />
+              <Button variant="primary" type="submit">
+                Submit
+              </Button>
             </Col>
           </Row>
           {this.state.newTopic && (
             <div>
               <Row>
-                <Col>Topic</Col>
                 <Col>
-                  <input
+                  <Form.Control
                     type="text"
                     onChange={this.handleTopicChange}
                     value={this.state.newTopicTitle}
+                    placeholder="Topic title..."
                     required
                   />
                 </Col>
               </Row>
               <Row>
-                <Col>Topic Description</Col>
                 <Col>
-                  <input
+                  <Form.Control
                     type="text"
                     onChange={this.handleDescriptionChange}
                     value={this.state.newTopicDescription}
+                    placeholder="Topic description..."
                     required
                   />
                 </Col>
@@ -110,7 +106,7 @@ class AddArticle extends Component {
             </div>
           )}
         </Container>
-      </form>
+      </Form>
     );
   }
   componentDidMount = () => {
@@ -130,32 +126,32 @@ class AddArticle extends Component {
       });
   };
 
-  handleChange(event) {
+  handleChange = event => {
     this.setState({ bodyInput: event.target.value });
-  }
+  };
 
-  handleTopicChange(event) {
+  handleTopicChange = event => {
     this.setState({ newTopicTitle: event.target.value });
-  }
+  };
 
-  handleDescriptionChange(event) {
+  handleDescriptionChange = event => {
     this.setState({ newTopicDescription: event.target.value });
-  }
+  };
 
-  handleNewTopic() {
+  handleNewTopic = () => {
     this.setState({ newTopic: true });
-  }
+  };
 
   handleTopicClick = event => {
     const pref = event.target.id;
     this.setState(prevState => ({ ...prevState, topic: pref }));
   };
 
-  handleTitleChange(event) {
+  handleTitleChange = event => {
     this.setState({ titleInput: event.target.value });
-  }
+  };
 
-  handleSubmit(event) {
+  handleSubmit = event => {
     event.preventDefault();
     if (this.state.newTopic) {
       postTopic({
@@ -197,8 +193,7 @@ class AddArticle extends Component {
           }
         });
       });
-  }
-  // could error handle the above for non-unique slugs
+  };
 }
 
 export default AddArticle;

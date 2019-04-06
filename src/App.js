@@ -20,13 +20,18 @@ class App extends Component {
     return (
       <div className="App">
         <nav>
-          <Link to="/">Home</Link> <Link to="/articles/all">All Articles</Link>
+          <Link to="/">Home</Link>{" "}
+          <Link to="/articles" topic="all">
+            All Articles
+          </Link>
           <Login setUser={this.setUser} user={this.state.user} />
         </nav>
         <Router>
           <HomeView user={this.state.user} path="/" />
           <Article user={this.state.user} path="/article/:id" />
-          <Articles path="/articles/:topic" />
+          <Articles path="/articles" />
+          <Articles path="/articles/topic/:topic" />
+          <Articles path="/articles/author/:author" />
           <Error path="/error" />
         </Router>
       </div>

@@ -1,47 +1,44 @@
 import React, { Component } from "react";
 import { postComment } from "../api";
 import { navigate } from "@reach/router";
+import { Form, Button } from "react-bootstrap";
 
 class CommentForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { userInput: "" };
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+  state = { userInput: "" };
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label for={"addComment"}>Add a comment:</label>
-        <textarea
+      <Form onSubmit={this.handleSubmit}>
+        <Form.Control
+          type="textarea"
           value={this.state.userInput}
           name="addComment"
           id={"addComment"}
           onChange={this.handleChange}
           required
+          placeholder="Comment..."
         />
-        <input type="submit" value="Add" />
-      </form>
+        <Button type="submit" value="Add">
+          Add
+        </Button>
+      </Form>
     );
   }
 
-  handleChange(event) {
+  handleChange = event => {
     this.setState({ userInput: event.target.value });
-  }
+  };
 
-  handleSubmit(event) {
+  handleSubmit = event => {
     event.preventDefault();
     postComment(this.props.articleId, {
       username: this.props.user,
       body: this.state.userInput
     })
-      .then(
-        console.log("in comment form"),
-        this.props.setChange(),
-        this.setState({ userInput: "" })
-      )
+      .then(() => {
+        this.props.setChange();
+        this.setState({ userInput: "" });
+      })
       .catch(error => {
         navigate("/error", {
           replace: true,
@@ -52,7 +49,7 @@ class CommentForm extends Component {
           }
         });
       });
-  }
+  };
 }
 
 export default CommentForm;
