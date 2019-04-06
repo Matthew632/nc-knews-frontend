@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { fetchData } from "./api";
+import { fetchData } from "../api";
 import Topics from "./Topics";
 import AddArticle from "./AddArticle";
 import { Link, navigate } from "@reach/router";

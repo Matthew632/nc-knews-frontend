@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { fetchData, patchVote, deleteArticle } from "./api";
+import { fetchData, patchVote, deleteArticle } from "../api";
 import { navigate } from "@reach/router";
 import Comments from "./Comments";
 import CommentForm from "./CommentForm";
@@ -9,15 +9,15 @@ import { dateConvert } from "../utils";
 class Article extends Component {
   state = {
     article: null,
-    vote: 0,
-    change: false
+    vote: 0
   };
 
   setChange = () => {
-    this.setState({ change: true });
+    this.setState(prevState => ({ ...prevState }));
   };
 
   render() {
+    console.log("in the article render");
     return (
       <div>
         {this.state.article && (

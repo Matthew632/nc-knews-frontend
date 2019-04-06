@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { fetchData, patchVote, deleteComment } from "./api";
+import { fetchData, patchVote, deleteComment } from "../api";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { navigate } from "@reach/router";
 
@@ -9,6 +9,7 @@ class Comments extends Component {
     change: false
   };
   render() {
+    console.log("in the comments render");
     return (
       <div>
         {this.state.comments && (
@@ -40,7 +41,7 @@ class Comments extends Component {
                           onClick={this.handleClick}
                           disabled={this.state[`key${com.comment_id}`]}
                         >
-                          Approve
+                          Vote
                         </Button>
                       </div>
                     </Col>
@@ -112,7 +113,7 @@ class Comments extends Component {
           this.setState(prevState => ({
             ...prevState,
             comments: data.comments,
-            sortChange: false
+            change: false
           }));
         })
         .catch(error => {

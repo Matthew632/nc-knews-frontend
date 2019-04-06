@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { postArticle, fetchData, postTopic } from "./api";
+import { postArticle, fetchData, postTopic } from "../api";
 import { Dropdown, Container, Col, Row } from "react-bootstrap";
 import { navigate } from "@reach/router";
 

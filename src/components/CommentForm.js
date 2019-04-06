@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { postComment } from "./api";
+import { postComment } from "../api";
 import { navigate } from "@reach/router";
 
 class CommentForm extends Component {

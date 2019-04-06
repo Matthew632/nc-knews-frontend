@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Button from "react-bootstrap/Button";
-import { fetchData } from "./api";
+import { fetchData } from "../api";
 import { navigate } from "@reach/router";
 
 class Login extends Component {
@@ -77,9 +77,11 @@ class Login extends Component {
   }
 
   handleSubmit(event) {
-    const username = this.state.userInput;
+    const username = this.state.userInput.toLowerCase();
     event.preventDefault();
-    if (this.state.authors.some(user => user.username === username)) {
+    if (
+      this.state.authors.some(user => user.username.toLowerCase() === username)
+    ) {
       this.props.setUser(username);
       this.setState({ userInput: "" });
     } else {

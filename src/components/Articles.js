@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import SortBy from "./SortBy";
 import Filter from "./Filter.js";
-import { fetchArticles } from "./api";
+import { fetchArticles } from "../api";
 import { Link, navigate } from "@reach/router";
 import { Container, Row, Col } from "react-bootstrap";
 import { dateConvert } from "../utils";
