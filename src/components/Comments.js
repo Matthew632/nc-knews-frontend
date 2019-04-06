@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import CommentVote from "./CommentVote";
 import { fetchData, patchVote, deleteComment } from "../api";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { navigate } from "@reach/router";
@@ -34,15 +35,7 @@ class Comments extends Component {
                           {com.votes +
                             (this.state[`key${com.comment_id}`] || 0)}
                         </span>
-                        <Button
-                          key={`key${com.comment_id}`}
-                          variant="primary"
-                          id={`/comments/${com.comment_id}`}
-                          onClick={this.handleClick}
-                          disabled={this.state[`key${com.comment_id}`]}
-                        >
-                          Vote
-                        </Button>
+                        <CommentVote com={com} handleClick={this.handleClick} />
                       </div>
                     </Col>
                   </Row>
@@ -107,7 +100,7 @@ class Comments extends Component {
   };
 
   componentDidUpdate(prevState) {
-    if (this.state.change) {
+    if (this.state.change || this.props.addComment) {
       fetchData(`/articles/${this.props.articleId}/comments`)
         .then(data => {
           this.setState(prevState => ({
@@ -115,6 +108,7 @@ class Comments extends Component {
             comments: data.comments,
             change: false
           }));
+          this.props.setFalse();
         })
         .catch(error => {
           navigate("/error", {

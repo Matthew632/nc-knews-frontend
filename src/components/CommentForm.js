@@ -37,7 +37,11 @@ class CommentForm extends Component {
       username: this.props.user,
       body: this.state.userInput
     })
-      .then(this.props.setChange, this.setState({ userInput: "" }))
+      .then(
+        console.log("in comment form"),
+        this.props.setChange(),
+        this.setState({ userInput: "" })
+      )
       .catch(error => {
         navigate("/error", {
           replace: true,

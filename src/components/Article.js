@@ -9,11 +9,24 @@ import { dateConvert } from "../utils";
 class Article extends Component {
   state = {
     article: null,
-    vote: 0
+    vote: 0,
+    addComment: false
   };
 
   setChange = () => {
-    this.setState(prevState => ({ ...prevState }));
+    console.log("in setchange");
+    this.setState(prevState => ({
+      ...prevState,
+      addComment: !prevState.addComment
+    }));
+  };
+
+  setFalse = () => {
+    console.log("in setfalse");
+    this.setState(prevState => ({
+      ...prevState,
+      addComment: false
+    }));
   };
 
   render() {
@@ -59,7 +72,12 @@ class Article extends Component {
           />
         )}
         {this.state.article && (
-          <Comments user={this.props.user} articleId={this.props.id} />
+          <Comments
+            addComment={this.state.addComment}
+            setFalse={this.setFalse}
+            user={this.props.user}
+            articleId={this.props.id}
+          />
         )}
       </div>
     );
