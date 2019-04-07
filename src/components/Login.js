@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { Button, Form } from "react-bootstrap";
+import { Button, Form, Container, Col, Row } from "react-bootstrap";
 import { fetchData } from "../api";
 import { navigate } from "@reach/router";
+import "../style.css";
 
 class Login extends Component {
   state = { userInput: "", authors: null, notValid: false };
@@ -11,31 +12,50 @@ class Login extends Component {
       <div>
         {this.props.user ? (
           <div>
-            <p>Logged in as {this.props.user}</p>
-            <Button variant="primary" id="logout" onClick={this.handleLogout}>
-              Log Out
-            </Button>
+            <Container>
+              <Row>
+                <Col>
+                  <p>Logged in as {this.props.user}</p>
+                </Col>
+                <Col>
+                  <Button
+                    variant="primary"
+                    id="logout"
+                    onClick={this.handleLogout}
+                  >
+                    Log Out
+                  </Button>
+                </Col>
+              </Row>
+            </Container>
           </div>
         ) : (
-          <Form onSubmit={this.handleSubmit}>
-            <label for="addUsername">Enter Username:</label>
-            <Form.Control
-              type="text"
-              value={this.state.userInput}
-              name="addUsername"
-              id="addUsername"
-              onChange={this.handleChange}
-              placeholder="'guest' is a valid username"
-            />
-            {this.state.notValid && (
-              <label for="addUsername" style={{ color: "red" }}>
-                Please enter a valid username
-              </label>
-            )}
-            <Button type="submit" value="Login">
-              Login
-            </Button>
-          </Form>
+          <Container>
+            <Row>
+              <Col>
+                <Form onSubmit={this.handleSubmit}>
+                  <label for="addUsername">Enter Username:</label>
+                  <Form.Control
+                    className="username"
+                    type="text"
+                    value={this.state.userInput}
+                    name="addUsername"
+                    id="addUsername"
+                    onChange={this.handleChange}
+                    placeholder="'guest' is a valid username"
+                  />
+                  {this.state.notValid && (
+                    <label for="addUsername" style={{ color: "red" }}>
+                      Please enter a valid username
+                    </label>
+                  )}
+                  <Button type="submit" value="Login">
+                    Login
+                  </Button>
+                </Form>
+              </Col>
+            </Row>
+          </Container>
         )}
       </div>
     );

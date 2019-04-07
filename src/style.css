@@ -1,0 +1,13 @@
+.articlesHeader {
+  background-color: rgb(197, 52, 47);
+}
+
+.login {
+  width: 50%;
+}
+
+.articles {
+  width: 90%;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}

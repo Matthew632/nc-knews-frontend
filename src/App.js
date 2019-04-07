@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import "./App.css";
 import { Router, Link } from "@reach/router";
+import "./App.css";
 import HomeView from "./components/HomeView";
 import Article from "./components/Article";
 import Articles from "./components/Articles";

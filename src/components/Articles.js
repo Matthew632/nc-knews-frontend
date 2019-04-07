@@ -7,6 +7,7 @@ import { fetchArticles } from "../api";
 import { Link, navigate } from "@reach/router";
 import { Container, Row, Col } from "react-bootstrap";
 import { dateConvert } from "../utils";
+import "../style.css";
 
 class Articles extends Component {
   state = {
@@ -47,9 +48,9 @@ class Articles extends Component {
             </Col>
           </Row>
         </Container>
-        <Container>
+        <Container className="articles">
           <Row>
-            <Col>Title</Col>
+            <Col xs={6}>Title</Col>
             <Col>Comments</Col>
             <Col>Votes</Col>
             <Col>Created</Col>
@@ -57,7 +58,7 @@ class Articles extends Component {
           {this.state.articles &&
             this.state.articles.map(art => (
               <Row>
-                <Col>
+                <Col xs={6}>
                   <Link
                     to={`/article/${art.article_id}`}
                     key={`key${art.article_id}`}
