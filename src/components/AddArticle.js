@@ -27,10 +27,10 @@ class AddArticle extends Component {
             <Col>
               <Form.Control
                 type="text"
-                name="addTitle"
+                name="titleInput"
                 id="addTitle"
                 value={this.state.titleInput}
-                onChange={this.handleTitleChange}
+                onChange={this.handleChange}
                 required
                 placeholder="Title..."
               />
@@ -42,7 +42,7 @@ class AddArticle extends Component {
                 as="textarea"
                 rows="3"
                 value={this.state.bodyInput}
-                name="addArticle"
+                name="bodyInput"
                 id="addArticle"
                 onChange={this.handleChange}
                 required
@@ -60,8 +60,9 @@ class AddArticle extends Component {
                   {this.state.topics &&
                     this.state.topics.map(top => (
                       <Dropdown.Item
-                        id={`${top.slug}`}
-                        onClick={this.handleTopicClick}
+                        value={`${top.slug}`}
+                        onClick={this.handleChange}
+                        name="topic"
                       >
                         {top.slug}
                       </Dropdown.Item>
@@ -85,10 +86,11 @@ class AddArticle extends Component {
                 <Col>
                   <Form.Control
                     type="text"
-                    onChange={this.handleTopicChange}
+                    onChange={this.handleChange}
                     value={this.state.newTopicTitle}
                     placeholder="Topic title..."
                     required
+                    name="newTopicTitle"
                   />
                 </Col>
               </Row>
@@ -96,10 +98,11 @@ class AddArticle extends Component {
                 <Col>
                   <Form.Control
                     type="text"
-                    onChange={this.handleDescriptionChange}
+                    onChange={this.handleChange}
                     value={this.state.newTopicDescription}
                     placeholder="Topic description..."
                     required
+                    name="newTopicDescription"
                   />
                 </Col>
               </Row>
@@ -127,28 +130,16 @@ class AddArticle extends Component {
   };
 
   handleChange = event => {
-    this.setState({ bodyInput: event.target.value });
-  };
-
-  handleTopicChange = event => {
-    this.setState({ newTopicTitle: event.target.value });
-  };
-
-  handleDescriptionChange = event => {
-    this.setState({ newTopicDescription: event.target.value });
+    const key = event.target.name;
+    const value = event.target.value;
+    this.setState(prevState => ({
+      ...prevState,
+      [key]: value
+    }));
   };
 
   handleNewTopic = () => {
     this.setState({ newTopic: true });
-  };
-
-  handleTopicClick = event => {
-    const pref = event.target.id;
-    this.setState(prevState => ({ ...prevState, topic: pref }));
-  };
-
-  handleTitleChange = event => {
-    this.setState({ titleInput: event.target.value });
   };
 
   handleSubmit = event => {
