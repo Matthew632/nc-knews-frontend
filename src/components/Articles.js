@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import SortBy from "./SortBy";
 import Filter from "./Filter.js";
 import Topics from "./Topics";
+import Pages from "./Pages";
 import { fetchArticles } from "../api";
 import { Link, navigate } from "@reach/router";
 import { Container, Row, Col } from "react-bootstrap";
@@ -15,8 +16,10 @@ class Articles extends Component {
     sortChange: false,
     authorChange: false,
     topicChange: false,
+    pageChange: false,
     topic: null,
-    page: 1
+    page: 1,
+    count: null
   };
 
   render() {
@@ -68,6 +71,11 @@ class Articles extends Component {
               </Row>
             ))}
         </Container>
+        <Pages
+          page={this.state.page}
+          count={this.state.count}
+          handlePage={this.handlePage}
+        />
       </div>
     );
   }
@@ -77,6 +85,7 @@ class Articles extends Component {
       .then(data => {
         this.setState({
           articles: data.articles,
+          count: data.total_count,
           topic: topicVal
         });
       })
@@ -124,9 +133,37 @@ class Articles extends Component {
           this.setState(prevState => ({
             ...prevState,
             articles: data.articles,
+            count: data.total_count,
             sortChange: false,
             authorChange: false,
-            topicChange: false
+            topicChange: false,
+            page: 1
+          }));
+        })
+        .catch(error => {
+          navigate("/error", {
+            replace: true,
+            state: {
+              code: error.response.status,
+              message: error.response.data.msg,
+              from: "/articles"
+            }
+          });
+        });
+    }
+    if (this.state.pageChange) {
+      fetchArticles(
+        this.state.topic,
+        this.state.page,
+        this.state.sort_by,
+        this.state.author
+      )
+        .then(data => {
+          this.setState(prevState => ({
+            ...prevState,
+            articles: data.articles,
+            count: data.total_count,
+            pageChange: false
           }));
         })
         .catch(error => {
@@ -149,6 +186,16 @@ class Articles extends Component {
       ...prevState,
       [key]: value,
       sortChange: true
+    }));
+  };
+
+  handlePage = event => {
+    console.log(event.target.name);
+    const newPage = event.target.name;
+    this.setState(prevState => ({
+      ...prevState,
+      page: newPage,
+      pageChange: true
     }));
   };
 }

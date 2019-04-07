@@ -22,7 +22,7 @@ const SortBy = props => {
           onClick={props.handleClick}
           key="key2"
         >
-          Comment count
+          Comments
         </Dropdown.Item>
         <Dropdown.Item
           name="sort_by"
