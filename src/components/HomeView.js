@@ -25,7 +25,9 @@ class HomeView extends Component {
             this.state.topArticles.map(art => (
               <Row>
                 <Col>
-                  <Link to={`/article/${art.article_id}`}>{art.title}</Link>
+                  <Link data-cy="topthree" to={`/article/${art.article_id}`}>
+                    {art.title}
+                  </Link>
                 </Col>{" "}
                 <Col>{art.comment_count}</Col>
               </Row>
