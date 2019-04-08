@@ -12,7 +12,7 @@ import "../style.css";
 class Articles extends Component {
   state = {
     articles: null,
-    sort_by: null,
+    sort_by: "created_at",
     author: null,
     sortChange: false,
     authorChange: false,
@@ -50,15 +50,22 @@ class Articles extends Component {
         </Container>
         <Container className="articles">
           <Row>
-            <Col xs={6}>Title</Col>
-            <Col>Comments</Col>
-            <Col>Votes</Col>
-            <Col>Created</Col>
+            <Col>Title</Col>
+            <Col className="alt">
+              {this.state.sort_by === "created_at"
+                ? "Created"
+                : this.state.sort_by === "votes"
+                ? "Votes"
+                : "Comments"}
+            </Col>
+            <Col className="columns">Comments</Col>
+            <Col className="columns">Votes</Col>
+            <Col className="columns">Created</Col>
           </Row>
           {this.state.articles &&
             this.state.articles.map(art => (
               <Row>
-                <Col xs={6}>
+                <Col>
                   <Link
                     to={`/article/${art.article_id}`}
                     key={`key${art.article_id}`}
@@ -66,9 +73,14 @@ class Articles extends Component {
                     {art.title}
                   </Link>
                 </Col>
-                <Col>{art.comment_count}</Col>
-                <Col>{art.votes}</Col>
-                <Col>{dateConvert(art.created_at)}</Col>
+                <Col className="alt">
+                  {this.state.sort_by === "created_at"
+                    ? dateConvert(art[this.state.sort_by])
+                    : art[this.state.sort_by]}
+                </Col>
+                <Col className="columns">{art.comment_count}</Col>
+                <Col className="columns">{art.votes}</Col>
+                <Col className="columns">{dateConvert(art.created_at)}</Col>
               </Row>
             ))}
         </Container>

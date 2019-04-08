@@ -11,3 +11,22 @@
   margin-top: 1em;
   margin-bottom: 1em;
 }
+
+.alt {
+  display: none;
+}
+
+@media only screen and (max-width: 780px) {
+  .columns {
+    display: none;
+    width: 1%;
+  }
+
+  .title {
+    width: 80%;
+  }
+
+  .alt {
+    display: block;
+  }
+}
