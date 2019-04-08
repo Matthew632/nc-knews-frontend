@@ -1,0 +1,25 @@
+{
+  "topics": [
+    { "slug": "coding", "description": "Code is love, code is life" },
+    { "slug": "football", "description": "FOOTIE!" },
+    {
+      "slug": "cooking",
+      "description": "Hey good looking, what you got cooking?"
+    },
+    { "slug": "Travel", "description": "Travel guides etc." },
+    { "slug": "Watersports", "description": "Involves getting wet" },
+    {
+      "slug": "Fitness",
+      "description": "How to guides on improving your fitness"
+    },
+    { "slug": "Finance", "description": "Money advice" },
+    { "slug": "New Topic", "description": "topic" },
+    { "slug": "non", "description": "sense" },
+    { "slug": "Books", "description": "All about books" },
+    {
+      "slug": "Homecare",
+      "description": "Top tips on looking after your home"
+    },
+    { "slug": "Survival", "description": "When things go wrong" }
+  ]
+}

@@ -24,7 +24,6 @@ class Articles extends Component {
   };
 
   render() {
-    console.log("rendering");
     let header = this.state.author
       ? `${this.state.author}'s Articles`
       : this.props.topic
@@ -67,6 +66,7 @@ class Articles extends Component {
               <Row>
                 <Col>
                   <Link
+                    cy-data="articleList"
                     to={`/article/${art.article_id}`}
                     key={`key${art.article_id}`}
                   >
@@ -203,7 +203,6 @@ class Articles extends Component {
   };
 
   handlePage = event => {
-    console.log(event.target.name);
     const newPage = event.target.name;
     this.setState(prevState => ({
       ...prevState,

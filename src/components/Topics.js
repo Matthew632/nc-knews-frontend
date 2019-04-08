@@ -10,7 +10,7 @@ class Topics extends Component {
 
   render() {
     return (
-      <Dropdown>
+      <Dropdown data-cy="topics">
         <Dropdown.Toggle variant="info" id="dropdown-basic">
           Topic
         </Dropdown.Toggle>
@@ -18,6 +18,8 @@ class Topics extends Component {
           {this.state.topics &&
             this.state.topics.map(top => (
               <Dropdown.Item
+                key={`${top.slug}`}
+                data-cy="topic-opt"
                 id={`${top.slug}`}
                 onClick={this.handleTopic}
               >{`${top.slug[0].toUpperCase()}${top.slug.slice(

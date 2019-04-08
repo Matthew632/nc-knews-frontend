@@ -25,7 +25,11 @@ class HomeView extends Component {
             this.state.topArticles.map(art => (
               <Row>
                 <Col>
-                  <Link data-cy="topthree" to={`/article/${art.article_id}`}>
+                  <Link
+                    key={art.article_id}
+                    data-cy="topthree"
+                    to={`/article/${art.article_id}`}
+                  >
                     {art.title}
                   </Link>
                 </Col>{" "}
@@ -55,7 +59,6 @@ class HomeView extends Component {
   };
 
   componentDidUpdate(prevState) {
-    console.log("in update");
     if (this.state.change) {
       this.setState(prevState => ({
         ...prevState,
@@ -66,12 +69,7 @@ class HomeView extends Component {
 
   handleTopic = event => {
     const slug = event.target.id;
-    console.log(slug);
     navigate(`/articles/topic/${slug}`);
-  };
-
-  handleClick = event => {
-    console.log(event.target.id);
   };
 }
 

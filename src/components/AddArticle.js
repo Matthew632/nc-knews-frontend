@@ -53,13 +53,18 @@ class AddArticle extends Component {
           <Row>
             <Col>
               <Dropdown>
-                <Dropdown.Toggle variant="info" id="dropdown-basic">
+                <Dropdown.Toggle
+                  data-cy="addTopic"
+                  variant="info"
+                  id="dropdown-basic"
+                >
                   {this.state.topic || "Topic?"}
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                   {this.state.topics &&
                     this.state.topics.map(top => (
                       <Dropdown.Item
+                        key={`${top.slug}`}
                         value={`${top.slug}`}
                         onClick={this.handleChange}
                         name="topic"
@@ -68,7 +73,10 @@ class AddArticle extends Component {
                       </Dropdown.Item>
                     ))}
                   <Dropdown.Divider />
-                  <Dropdown.Item onClick={this.handleNewTopic}>
+                  <Dropdown.Item
+                    data-cy="newTopic"
+                    onClick={this.handleNewTopic}
+                  >
                     New topic
                   </Dropdown.Item>
                 </Dropdown.Menu>
@@ -85,6 +93,7 @@ class AddArticle extends Component {
               <Row>
                 <Col>
                   <Form.Control
+                    data-cy="newTopicInput"
                     type="text"
                     onChange={this.handleChange}
                     value={this.state.newTopicTitle}
@@ -97,6 +106,7 @@ class AddArticle extends Component {
               <Row>
                 <Col>
                   <Form.Control
+                    data-cy="newTopicInput"
                     type="text"
                     onChange={this.handleChange}
                     value={this.state.newTopicDescription}

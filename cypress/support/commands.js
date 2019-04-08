@@ -1,3 +1,20 @@
+Cypress.Commands.add("stubAndVisitArticles", file => {
+  cy.server();
+  cy.route(
+    "https://nc-knews-server-main.herokuapp.com/api/articles",
+    file.json
+  );
+  cy.route(
+    "https://nc-knews-server-main.herokuapp.com/api/users",
+    "fx:users.json"
+  );
+  cy.route(
+    "https://nc-knews-server-main.herokuapp.com/api/topics",
+    "fx:topics.json"
+  );
+  cy.visit("/articles");
+});
+
 // ***********************************************
 // This example commands.js shows you how to
 // create various custom commands and overwrite

@@ -10,7 +10,6 @@ class Comments extends Component {
     change: false
   };
   render() {
-    console.log("in the comments render");
     return (
       <div>
         {this.state.comments && (
@@ -20,7 +19,7 @@ class Comments extends Component {
                 <Col>Comments</Col>
               </Row>
               {this.state.comments.map(com => (
-                <div>
+                <div key={com.comment_id}>
                   <Row>
                     <Col>{com.author}</Col>
                   </Row>

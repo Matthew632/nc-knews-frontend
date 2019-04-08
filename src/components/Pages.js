@@ -8,6 +8,7 @@ const Pages = props => {
   for (let number = 1; number <= count; number++) {
     items.push(
       <Pagination.Item
+        cy-data="pageItem"
         name={number}
         key={number}
         active={number === active}
