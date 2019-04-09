@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { postArticle, fetchData, postTopic } from "../api";
 import { Dropdown, Container, Col, Row, Form, Button } from "react-bootstrap";
 import { navigate } from "@reach/router";
+import "../style.css";
 
 class AddArticle extends Component {
   state = {
@@ -17,9 +18,9 @@ class AddArticle extends Component {
   render() {
     return (
       <Form onSubmit={this.handleSubmit}>
-        <Container>
+        <Container className="addArticle">
           <Row>
-            <Col>
+            <Col className="addArticleHeader">
               <h3>Add Article</h3>
             </Col>
           </Row>
@@ -37,7 +38,7 @@ class AddArticle extends Component {
             </Col>
           </Row>
           <Row>
-            <Col>
+            <Col className="articleBody">
               <Form.Control
                 as="textarea"
                 rows="3"
@@ -48,44 +49,6 @@ class AddArticle extends Component {
                 required
                 placeholder="Article..."
               />
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <Dropdown>
-                <Dropdown.Toggle
-                  data-cy="addTopic"
-                  variant="info"
-                  id="dropdown-basic"
-                >
-                  {this.state.topic || "Topic?"}
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                  {this.state.topics &&
-                    this.state.topics.map(top => (
-                      <Dropdown.Item
-                        key={`${top.slug}`}
-                        value={`${top.slug}`}
-                        onClick={this.handleChange}
-                        name="topic"
-                      >
-                        {top.slug}
-                      </Dropdown.Item>
-                    ))}
-                  <Dropdown.Divider />
-                  <Dropdown.Item
-                    data-cy="newTopic"
-                    onClick={this.handleNewTopic}
-                  >
-                    New topic
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            </Col>
-            <Col>
-              <Button variant="primary" type="submit">
-                Submit
-              </Button>
             </Col>
           </Row>
           {this.state.newTopic && (
@@ -113,11 +76,51 @@ class AddArticle extends Component {
                     placeholder="Topic description..."
                     required
                     name="newTopicDescription"
+                    className="articleBody"
                   />
                 </Col>
               </Row>
             </div>
           )}
+          <Row className="bottomMargin">
+            <Col>
+              <Dropdown>
+                <Dropdown.Toggle
+                  data-cy="addTopic"
+                  variant="info"
+                  id="dropdown-basic"
+                >
+                  {this.state.topic || "Topic?"}
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  {this.state.topics &&
+                    this.state.topics.map(top => (
+                      <Dropdown.Item
+                        key={`${top.slug}`}
+                        id={`${top.slug}`}
+                        value={`${top.slug}`}
+                        onClick={this.handleTopicChange}
+                        name="topic"
+                      >
+                        {top.slug}
+                      </Dropdown.Item>
+                    ))}
+                  <Dropdown.Divider />
+                  <Dropdown.Item
+                    data-cy="newTopic"
+                    onClick={this.handleNewTopic}
+                  >
+                    New topic
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </Col>
+            <Col>
+              <Button variant="primary" type="submit">
+                Submit
+              </Button>
+            </Col>
+          </Row>
         </Container>
       </Form>
     );
@@ -140,16 +143,25 @@ class AddArticle extends Component {
   };
 
   handleChange = event => {
-    const key = event.target.name;
     const value = event.target.value;
+    const key = event.target.name;
     this.setState(prevState => ({
       ...prevState,
       [key]: value
     }));
   };
 
+  handleTopicChange = event => {
+    const value = event.target.id;
+    this.setState(prevState => ({
+      ...prevState,
+      topic: value,
+      newTopic: null
+    }));
+  };
+
   handleNewTopic = () => {
-    this.setState({ newTopic: true });
+    this.setState({ newTopic: true, topic: null });
   };
 
   handleSubmit = event => {

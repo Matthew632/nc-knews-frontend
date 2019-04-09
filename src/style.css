@@ -16,6 +16,31 @@
   display: none;
 }
 
+.addArticle {
+  margin-top: 1em;
+  max-width: 650px;
+  border: 1px;
+  border: solid;
+  border-color: #17a2b8;
+  border-radius: 10px;
+}
+
+.bottomMargin {
+  margin: 1em;
+}
+
+.articleBody {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.addArticleHeader {
+  background-color: #17a2b8;
+  margin-bottom: 1em;
+  -webkit-text-fill-color: white;
+  font: Helvetica Neue;
+}
+
 @media only screen and (max-width: 780px) {
   .columns {
     display: none;
