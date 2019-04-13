@@ -34,7 +34,7 @@ class Login extends Component {
             <Row>
               <Col>
                 <Form onSubmit={this.handleSubmit}>
-                  <label for="addUsername">Enter Username:</label>
+                  <label htmlFor="addUsername">Enter Username:</label>
                   <Form.Control
                     className="username"
                     type="text"

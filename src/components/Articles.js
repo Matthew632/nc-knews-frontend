@@ -42,7 +42,7 @@ class Articles extends Component {
             <Col>
               <Filter />
             </Col>
-            <Col>
+            <Col className="topicFilter">
               <Topics />
             </Col>
           </Row>
@@ -63,7 +63,7 @@ class Articles extends Component {
           </Row>
           {this.state.articles &&
             this.state.articles.map(art => (
-              <Row>
+              <Row key={`key${art.article_id}`}>
                 <Col>
                   <Link
                     cy-data="articleList"

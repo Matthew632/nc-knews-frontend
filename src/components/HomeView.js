@@ -23,7 +23,7 @@ class HomeView extends Component {
           </Row>
           {this.state.topArticles &&
             this.state.topArticles.map(art => (
-              <Row>
+              <Row key={art.article_id}>
                 <Col>
                   <Link
                     key={art.article_id}

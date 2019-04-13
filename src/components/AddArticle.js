@@ -11,8 +11,8 @@ class AddArticle extends Component {
     topics: null,
     topic: null,
     newTopic: false,
-    newTopicTitle: null,
-    newTopicDescription: null
+    newTopicTitle: "",
+    newTopicDescription: ""
   };
 
   render() {

@@ -55,3 +55,8 @@
     display: block;
   }
 }
+@media only screen and (max-width: 360px) {
+  .topicFilter {
+    display: none;
+  }
+}
