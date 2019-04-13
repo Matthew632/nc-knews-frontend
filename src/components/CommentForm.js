@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { postComment } from "../api";
 import { navigate } from "@reach/router";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Container, Row, Col } from "react-bootstrap";
 
 class CommentForm extends Component {
   state = { userInput: "" };
@@ -9,18 +9,28 @@ class CommentForm extends Component {
   render() {
     return (
       <Form onSubmit={this.handleSubmit}>
-        <Form.Control
-          type="textarea"
-          value={this.state.userInput}
-          name="addComment"
-          id={"addComment"}
-          onChange={this.handleChange}
-          required
-          placeholder="Comment..."
-        />
-        <Button type="submit" value="Add">
-          Add
-        </Button>
+        <Container className="addComment">
+          <Row>
+            <Col>
+              <Form.Control
+                type="textarea"
+                value={this.state.userInput}
+                name="addComment"
+                id={"addComment"}
+                onChange={this.handleChange}
+                required
+                placeholder="Comment..."
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Button type="submit" value="Add">
+                Add
+              </Button>
+            </Col>
+          </Row>
+        </Container>
       </Form>
     );
   }

@@ -16,6 +16,10 @@
   display: none;
 }
 
+.addComment {
+  max-width: 650px;
+}
+
 .addArticle {
   margin-top: 1em;
   max-width: 650px;
