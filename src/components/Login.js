@@ -74,8 +74,8 @@ class Login extends Component {
           navigate("/error", {
             replace: true,
             state: {
-              code: error.response.status,
-              message: error.response.data.msg,
+              code: error.response ? error.response.status : "",
+              message: error.response ? error.response.data.msg : "",
               from: "/article"
             }
           });

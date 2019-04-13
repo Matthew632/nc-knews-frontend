@@ -9,8 +9,9 @@ class CommentForm extends Component {
   render() {
     return (
       <Form onSubmit={this.handleSubmit}>
+        <hr className="hr" />
         <Container className="addComment">
-          <Row>
+          <Row className="bottomMarginHalf">
             <Col>
               <Form.Control
                 type="textarea"
@@ -26,7 +27,7 @@ class CommentForm extends Component {
           <Row>
             <Col>
               <Button type="submit" value="Add">
-                Add
+                Post Comment
               </Button>
             </Col>
           </Row>
@@ -53,8 +54,8 @@ class CommentForm extends Component {
         navigate("/error", {
           replace: true,
           state: {
-            code: error.response.status,
-            message: error.response.data.msg,
+            code: error.response ? error.response.status : "",
+            message: error.response ? error.response.data.msg : "",
             from: "/article"
           }
         });

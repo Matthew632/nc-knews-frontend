@@ -3,7 +3,7 @@ import { fetchData, patchVote, deleteArticle } from "../api";
 import { navigate } from "@reach/router";
 import Comments from "./Comments";
 import CommentForm from "./CommentForm";
-import Button from "react-bootstrap/Button";
+import { Button, Container, Row, Col } from "react-bootstrap";
 import { dateConvert } from "../utils";
 
 class Article extends Component {
@@ -35,32 +35,60 @@ class Article extends Component {
       <div>
         {this.state.article && (
           <div>
-            <h2>{this.state.article.title}</h2>
-            <p>{`By ${this.state.article.author}`}</p>
-            <p>{dateConvert(this.state.article.created_at)}</p>
-            <p>{this.state.article.body}</p>
-            <p>
-              <span>Votes: {this.state.article.votes + this.state.vote}</span>
-              {this.props.user && (
-                <Button
-                  variant="primary"
-                  id={`/articles/${this.props.id}`}
-                  onClick={this.handleClick}
-                  disabled={this.state.vote !== 0}
-                >
-                  Vote
-                </Button>
-              )}
-            </p>
-            {this.props.user === this.state.article.author && (
-              <Button
-                variant="danger"
-                id="deleteButton"
-                onClick={this.handleDelete}
-              >
-                Delete Article
-              </Button>
-            )}
+            <Container>
+              <Row>
+                <Col>
+                  <h2>{this.state.article.title}</h2>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <p>{`By ${this.state.article.author}`}</p>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <p>{dateConvert(this.state.article.created_at)}</p>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <p>{this.state.article.body}</p>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <p>
+                    <span className="rightMargin">
+                      Votes: {this.state.article.votes + this.state.vote}
+                    </span>
+                    {this.props.user && (
+                      <Button
+                        variant="primary"
+                        id={`/articles/${this.props.id}`}
+                        onClick={this.handleClick}
+                        disabled={this.state.vote !== 0}
+                      >
+                        Vote
+                      </Button>
+                    )}
+                  </p>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  {this.props.user === this.state.article.author && (
+                    <Button
+                      variant="danger"
+                      id="deleteButton"
+                      onClick={this.handleDelete}
+                    >
+                      Delete Article
+                    </Button>
+                  )}{" "}
+                </Col>
+              </Row>
+            </Container>
           </div>
         )}
         {this.props.user && (
@@ -86,14 +114,15 @@ class Article extends Component {
   componentDidMount = () => {
     fetchData(`/articles/${this.props.id}`)
       .then(data => {
+        console.log(data);
         this.setState({ article: data.article });
       })
       .catch(error => {
         navigate("/error", {
           replace: true,
           state: {
-            code: error.response.status,
-            message: error.response.data.msg,
+            code: error.response ? error.response.status : "",
+            message: error.response ? error.response.data.msg : "",
             from: "/article"
           }
         });
@@ -107,8 +136,8 @@ class Article extends Component {
         navigate("/error", {
           replace: true,
           state: {
-            code: error.response.status,
-            message: error.response.data.msg,
+            code: error.response ? error.response.status : "",
+            message: error.response ? error.response.data.msg : "",
             from: "/article"
           }
         });
@@ -126,8 +155,8 @@ class Article extends Component {
         navigate("/error", {
           replace: true,
           state: {
-            code: error.response.status,
-            message: error.response.data.msg,
+            code: error.response ? error.response.status : "",
+            message: error.response ? error.response.data.msg : "",
             from: "/article"
           }
         });

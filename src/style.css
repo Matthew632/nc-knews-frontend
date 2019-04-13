@@ -1,3 +1,7 @@
+html * {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+}
+
 .articlesHeader {
   background-color: rgb(197, 52, 47);
 }
@@ -17,7 +21,7 @@
 }
 
 .addComment {
-  max-width: 650px;
+  max-width: 500px;
 }
 
 .addArticle {
@@ -30,7 +34,15 @@
 }
 
 .bottomMargin {
-  margin: 1em;
+  margin-bottom: 1em;
+}
+
+.bottomMarginHalf {
+  margin-bottom: 0.5em;
+}
+
+.rightMargin {
+  margin-right: 1em;
 }
 
 .articleBody {
@@ -42,7 +54,35 @@
   background-color: #17a2b8;
   margin-bottom: 1em;
   -webkit-text-fill-color: white;
-  font: Helvetica Neue;
+  font: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.addCommentHeader {
+  background-color: #007bff;
+  -webkit-text-fill-color: white;
+  font: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.addCommentContainer {
+  margin-top: 1em;
+  max-width: 650px;
+  border: 1px;
+  border: solid;
+  border-color: #007bff;
+  border-radius: 10px;
+}
+
+.commentDivider {
+  border-top: 1px;
+  border-top: solid;
+  border-top-color: #007bff;
+}
+
+.hr {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border: 0;
+  border-top: 5px solid rgba(0, 0, 0, 0.2);
 }
 
 @media only screen and (max-width: 780px) {

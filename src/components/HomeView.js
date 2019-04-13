@@ -14,7 +14,7 @@ class HomeView extends Component {
     return (
       <div>
         <h1>NC News</h1>
-        <Topics />
+        <Topics wording="Search by Topic" />
         <h2>Top Articles</h2>
         <Container>
           <Row>
@@ -50,8 +50,8 @@ class HomeView extends Component {
         navigate("/error", {
           replace: true,
           state: {
-            code: error.response.status,
-            message: error.response.data.msg,
+            code: error.response ? error.response.status : "",
+            message: error.response ? error.response.data.msg : "",
             from: "/"
           }
         });

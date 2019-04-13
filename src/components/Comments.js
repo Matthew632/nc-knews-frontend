@@ -14,22 +14,24 @@ class Comments extends Component {
       <div>
         {this.state.comments && (
           <div>
-            <Container>
+            <Container className="addCommentContainer">
               <Row>
-                <Col>Comments</Col>
+                <Col className="addCommentHeader">
+                  <h5>Comments</h5>
+                </Col>
               </Row>
               {this.state.comments.map(com => (
                 <div key={com.comment_id}>
-                  <Row>
+                  <Row className="commentDivider">
                     <Col>{com.author}</Col>
                   </Row>
                   <Row>
                     <Col>{com.body}</Col>
                   </Row>
-                  <Row>
+                  <Row className="bottomMarginHalf">
                     <Col>
                       <div>
-                        <span>
+                        <span className="rightMargin">
                           Votes:{" "}
                           {com.votes +
                             (this.state[`key${com.comment_id}`] || 0)}
@@ -39,7 +41,7 @@ class Comments extends Component {
                     </Col>
                   </Row>
                   {com.author === this.props.user && (
-                    <Row>
+                    <Row className="bottomMarginHalf">
                       <Col>
                         <Button
                           variant="danger"
@@ -69,8 +71,8 @@ class Comments extends Component {
         navigate("/error", {
           replace: true,
           state: {
-            code: error.response.status,
-            message: error.response.data.msg,
+            code: error.response ? error.response.status : "",
+            message: error.response ? error.response.data.msg : "",
             from: "/article"
           }
         });
@@ -90,8 +92,8 @@ class Comments extends Component {
         navigate("/error", {
           replace: true,
           state: {
-            code: error.response.status,
-            message: error.response.data.msg,
+            code: error.response ? error.response.status : "",
+            message: error.response ? error.response.data.msg : "",
             from: "/article"
           }
         });
@@ -113,8 +115,8 @@ class Comments extends Component {
           navigate("/error", {
             replace: true,
             state: {
-              code: error.response.status,
-              message: error.response.data.msg,
+              code: error.response ? error.response.status : "",
+              message: error.response ? error.response.data.msg : "",
               from: "/article"
             }
           });
@@ -134,8 +136,8 @@ class Comments extends Component {
         navigate("/error", {
           replace: true,
           state: {
-            code: error.response.status,
-            message: error.response.data.msg,
+            code: error.response ? error.response.status : "",
+            message: error.response ? error.response.data.msg : "",
             from: "/article"
           }
         });

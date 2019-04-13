@@ -12,7 +12,7 @@ class Topics extends Component {
     return (
       <Dropdown data-cy="topics">
         <Dropdown.Toggle variant="info" id="dropdown-basic">
-          Topic
+          {this.props.wording ? this.props.wording : "Topic"}
         </Dropdown.Toggle>
         <Dropdown.Menu>
           {this.state.topics &&
@@ -40,8 +40,8 @@ class Topics extends Component {
         navigate("/error", {
           replace: true,
           state: {
-            code: error.response.status,
-            message: error.response.data.msg,
+            code: error.response ? error.response.status : "",
+            message: error.response ? error.response.data.msg : "",
             from: "/"
           }
         });
