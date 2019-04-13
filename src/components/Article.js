@@ -14,7 +14,6 @@ class Article extends Component {
   };
 
   setChange = () => {
-    console.log("in setchange");
     this.setState(prevState => ({
       ...prevState,
       addComment: !prevState.addComment
@@ -22,7 +21,6 @@ class Article extends Component {
   };
 
   setFalse = () => {
-    console.log("in setfalse");
     this.setState(prevState => ({
       ...prevState,
       addComment: false
@@ -30,7 +28,6 @@ class Article extends Component {
   };
 
   render() {
-    console.log("in the article render");
     return (
       <div>
         {this.state.article && (
@@ -114,7 +111,6 @@ class Article extends Component {
   componentDidMount = () => {
     fetchData(`/articles/${this.props.id}`)
       .then(data => {
-        console.log(data);
         this.setState({ article: data.article });
       })
       .catch(error => {

@@ -50,7 +50,6 @@ class Topics extends Component {
 
   handleTopic = event => {
     const slug = event.target.id;
-    console.log(slug);
     navigate(`/articles/topic/${slug}`);
   };
 }
