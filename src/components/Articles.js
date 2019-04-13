@@ -14,7 +14,6 @@ class Articles extends Component {
     articles: null,
     sort_by: "created_at",
     author: null,
-    sortChange: false,
     authorChange: false,
     topicChange: false,
     pageChange: false,
@@ -131,11 +130,7 @@ class Articles extends Component {
         author: null
       }));
     }
-    if (
-      this.state.sortChange ||
-      this.state.authorChange ||
-      this.state.topicChange
-    ) {
+    if (this.state.authorChange || this.state.topicChange) {
       fetchArticles(
         this.state.topic,
         this.state.page,
@@ -147,7 +142,6 @@ class Articles extends Component {
             ...prevState,
             articles: data.articles,
             count: data.total_count,
-            sortChange: false,
             authorChange: false,
             topicChange: false,
             page: 1
@@ -198,7 +192,8 @@ class Articles extends Component {
     this.setState(prevState => ({
       ...prevState,
       [key]: value,
-      sortChange: true
+      pageChange: true,
+      page: 1
     }));
   };
 
