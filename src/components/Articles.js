@@ -23,7 +23,9 @@ class Articles extends Component {
   };
 
   render() {
-    let header = this.state.author
+    let header = this.props.author
+      ? `${this.props.author}'s Articles`
+      : this.state.author
       ? `${this.state.author}'s Articles`
       : this.props.topic
       ? `${this.props.topic[0].toUpperCase()}${this.props.topic.slice(
@@ -131,12 +133,10 @@ class Articles extends Component {
       }));
     }
     if (this.state.authorChange || this.state.topicChange) {
-      fetchArticles(
-        this.state.topic,
-        this.state.page,
-        this.state.sort_by,
-        this.state.author
-      )
+      const authorVal = this.props.author
+        ? this.props.author
+        : this.state.author;
+      fetchArticles(this.state.topic, 1, this.state.sort_by, authorVal)
         .then(data => {
           this.setState(prevState => ({
             ...prevState,
