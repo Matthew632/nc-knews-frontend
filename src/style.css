@@ -24,6 +24,15 @@ html * {
   max-width: 500px;
 }
 
+.topArticles {
+  margin-top: 1em;
+  max-width: 800px;
+  border: 1px;
+  border: solid;
+  border-color: #17a2b8;
+  border-radius: 10px;
+}
+
 .addArticle {
   margin-top: 1em;
   max-width: 650px;
@@ -97,6 +106,9 @@ html * {
 
   .alt {
     display: block;
+  }
+  .preview {
+    display: none;
   }
 }
 @media only screen and (max-width: 360px) {
