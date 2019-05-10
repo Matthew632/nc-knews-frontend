@@ -8,15 +8,6 @@ describe("HomeView", () => {
     cy.visit("/");
     cy.get("[data-cy=topthree]").should("have.length", 3);
   });
-  it("check that only 2 top articles are displayed if only 2 are passed by cypress", () => {
-    cy.server();
-    cy.route(
-      "https://nc-knews-server-main.herokuapp.com/api/articles?sort_by=comment_count&order=desc&limit=3",
-      "fx:top2.json"
-    );
-    cy.visit("/");
-    cy.get("[data-cy=topthree]").should("have.length", 2);
-  });
   it("check the topic menu displays its children", () => {
     cy.server();
     cy.route(
